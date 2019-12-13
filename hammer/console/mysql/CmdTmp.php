@@ -77,10 +77,10 @@
                     $limit = 10000;
                 }
                 $this->logStatus($tn, 'rowsLimit', $limit);
-                if ($this->getStatus($tn, 'coypData') === false) {
+                if (1 || $this->getStatus($tn, 'coypData') === false) {
                     echo "not coypData\n";
 
-                    $tableInfo = $dbBf->setText("show full columns from {$tn};")->queryRow();
+                    $tableInfo = $dbBf->setText("show full columns from {$tn};")->queryAll();
                     $isPkInt   = false;
                     $pk        = '';
                     $fields    = [];
