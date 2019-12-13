@@ -44,7 +44,9 @@
                 if ($this->getStatus($tn, 'create') === false) {
                     echo "not created\n";
                     $row2 = $dbBf->setText("show create table {$tn};")->queryRow();
-                    $sql  = str_replace(['USING BTREE', 'utf8mb4_unicode_ci', 'utf8mb4'], [
+                    if (isset($row2['View']))
+                        continue;
+                    $sql = str_replace(['USING BTREE', 'utf8mb4_unicode_ci', 'utf8mb4'], [
                         '',
                         'utf8_general_ci',
                         'utf8'
