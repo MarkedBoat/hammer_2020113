@@ -78,7 +78,7 @@
             } catch (\PDOException $e) {
                 preg_match_all('/:\w+/', $this->commandText, $ar);
                 $bindKeys = array_keys($this->bindData);
-                Sys::app()->interruption()->setMsg('操作失败')->setCode('mysql_error_exec_error')->setDebugMsg($e->getMessage())->setDebugData([
+                Sys::app()->interruption()->setMsg('操作失败'.$e->getMessage())->setCode('mysql_error_exec_error')->setDebugMsg($e->getMessage())->setDebugData([
                     'sql'  => $this->commandText,
                     'bind' => $this->bindData,
                     $this->getDb(),
