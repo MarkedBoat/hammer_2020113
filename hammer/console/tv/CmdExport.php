@@ -1,16 +1,13 @@
 <?php
 
 
-    namespace console\user;
+    namespace console\tv;
 
     use models\common\CmdBase;
     use models\common\sys\Sys;
 
-    date_default_timezone_set('PRC');
-    ini_set('date.timezone', 'Asia/Shanghai');
 
     class CmdExport extends CmdBase {
-
 
         public static function getClassName() {
             return __CLASS__;
@@ -21,21 +18,25 @@
             parent::init();
         }
 
-        public function hasVipId() {
-            date_default_timezone_set('PRC');
-
-            $phpFile = Sys::app()->params['console']['logDir'] . '/vip_user.csv';
+        /**
+         * 导出连过网的
+         */
+        public function onlined() {
+            $phpFile = Sys::app()->params['console']['logDir'] . '/onlined_uuid.csv';
             $goon    = true;
             $i       = 0;
             $lastId  = 0;
             file_put_contents($phpFile, '');
             while ($goon) {
-                $table = Sys::app()->db('cli_bftv_slave')->setText("SELECT id,vipouttime FROM std_user WHERE vipouttime>0 and id>'{$lastId}' ORDER BY id ASC LIMIT 1000")->queryAll();
+                $table = Sys::app()->db('cli_bftv_slave')->setText("select  id, uuid, getuiid, platform, sys_version, softid, launcher_version,ip, province, city from std_uuid_getuiid and id>'{$lastId}' ORDER BY id ASC LIMIT 1000")->queryAll();
                 if (is_array($table)) {
                     if (count($table) < 1000)
                         $goon = false;
                     foreach ($table as $row) {
-                        $str = "{$i},{$row['id']},{$row['vipouttime']}\n";
+                        $ar  = array_map(function ($ele) {
+                            return str_replace(',', '#', $ele);
+                        }, $row);
+                        $str = $i . ',' . join(',', $ar) . "\n";
                         file_put_contents($phpFile, $str, FILE_APPEND);
                         $lastId = $row['id'];
                         $i++;
