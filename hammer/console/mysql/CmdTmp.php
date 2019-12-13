@@ -77,7 +77,7 @@
                     $limit = 10000;
                 }
                 $this->logStatus($tn, 'rowsLimit', $limit);
-                if (1 || $this->getStatus($tn, 'coypData') === false) {
+                if (1 || $this->getStatus($tn, 'coypData1') === false) {
                     echo "not coypData\n";
 
                     $tableInfo = $dbBf->setText("show full columns from {$tn};")->queryAll();
@@ -85,16 +85,18 @@
                     $pk        = '';
                     $fields    = [];
                     $fields2   = [];
+                    $fields3   = [];
                     foreach ($tableInfo as $row2) {
                         if ($isPkInt === false && $row2['Key'] === 'PRI' && strstr($row2['Type'], 'int(')) {
                             $pk      = $row2['Field'];
                             $isPkInt = true;
                         }
                         $fields[]  = "`{$row2['Field']}`";
-                        $fields2[] = $row2['Field'];
+                        $fields2[] = "`{$row2['Field']}`=:{$row2['Field']}_{index}";
+                        $fields3[] = $row2['Field'];
                     }
                     if ($isPkInt === false) {
-                        $this->logStatus($tn, 'coypData', 'noIntPk');
+                        $this->logStatus($tn, 'coypData1', 'noIntPk');
                         continue;
                     }
 
@@ -103,10 +105,44 @@
                         $maxPkVal = $dbBf->setText("select max(`{$pk}`) from {$tn}")->queryScalar();
                         $this->logStatus($tn, 'maxId', $maxPkVal);
                     }
+                    $goon        = true;
+                    $selection   = join(',', $fields);
+                    $sqlSelctTpl = "select {$selection} from {$tn} where `{$pk}`<{maxVal} limit 100 order by `{$pk}` desc";
+                    $sqlInsTpl   = "insert ignore into {$tn} set " . join(',', $fields2);
+
+                    $insCount = 0;
+                    while ($goon) {
+                        $table2 = $dbBf->setText(str_replace('{maxVal}', $maxPkVal, $sqlSelctTpl))->queryAll();
+                        if (is_array($table2) && count($table2)) {
+                            $sqls = [];
+                            $bind = [];
+                            foreach ($table2 as $index => $ele) {
+                                $sqls[] = str_replace('{index}', $index, $sqlInsTpl);
+                                foreach ($fields3 as $field) {
+                                    $bind["{$field}_{$index}"] = $ele[$field];
+                                }
+                                $maxPkVal = $ele[$pk];
+                                $insCount++;
+                            }
+                            $dbFuntv->setText(join(';', $sqls))->bindArray($bind)->execute();
+                            $sqlCount = count($sqls);
+                            if ($limit && $insCount >= $limit) {
+                                $goon = false;
+                            }
+                            if ($sqlCount < 100) {
+                                $goon = false;
+                            }
+
+                        } else {
+                            $goon = false;
+                        }
+                        echo date('Y-m-d H:i:s', time()) . "\n";
+                    }
+                    $this->logStatus($tn, 'coypData1', 'ok');
 
 
-                   // $dbFuntv->setText($sql)->execute();
-                   // $this->logStatus($tn, 'coypData', 'ok');
+                    // $dbFuntv->setText($sql)->execute();
+                    // $this->logStatus($tn, 'coypData', 'ok');
                 } else {
                     echo "has coypData\n";
                 }
