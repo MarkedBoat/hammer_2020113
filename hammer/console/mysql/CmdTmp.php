@@ -46,7 +46,7 @@
                     $row2 = $dbBf->setText("show create table {$tn};")->queryRow();
                     $sql  = str_replace(['USING BTREE', 'utf8mb4_unicode_ci', 'utf8mb4'], [
                         '',
-                        'utf8',
+                        'utf8_general_ci',
                         'utf8'
                     ], $row2['Create Table']);
                     $dbFuntv->setText($sql)->execute();
