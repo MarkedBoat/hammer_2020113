@@ -1,4 +1,4 @@
-#!/usr/local/php-5.4.45/bin/php
+#!/usr/bin/php
 <?php
 require_once(dirname(__FILE__).'/hammer.php');
 
