@@ -6,8 +6,7 @@
     use models\common\CmdBase;
     use models\common\sys\Sys;
 
-    date_default_timezone_set('PRC');
-    ini_set('date.timezone', 'Asia/Shanghai');
+    ini_set('memory_limit', '1024M');
 
     class CmdExport extends CmdBase {
 
@@ -22,8 +21,6 @@
         }
 
         public function hasVipId() {
-            date_default_timezone_set('PRC');
-
             $phpFile = Sys::app()->params['console']['logDir'] . '/vip_user.csv';
             $goon    = true;
             $i       = 0;
@@ -48,7 +45,19 @@
             }
             echo date('Y-m-d H:i:s', time());
             echo "ok\n";
+        }
 
+        public function onlined_uuid() {
+            $file     = Sys::app()->params['console']['logDir'] . '/vip_user.csv';
+            $file2    = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
+            $f        = fopen($file, 'r');
+            $fileLine = 0;
+            while (!feof($f)) {
+                $fileLine++;
+                $str = trim(fgets($f));
+                echo $str;
 
+            }
+            fclose($f);
         }
     }
