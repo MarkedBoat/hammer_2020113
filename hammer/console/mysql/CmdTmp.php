@@ -124,6 +124,7 @@
                                 $maxPkVal = $ele[$pk];
                                 $insCount++;
                             }
+                            $this->logStatus($tn, 'maxId', $maxPkVal);
                             $dbFuntv->setText(join(';', $sqls))->bindArray($bind)->execute();
                             $sqlCount = count($sqls);
                             if ($limit && $insCount >= $limit) {
@@ -136,7 +137,7 @@
                         } else {
                             $goon = false;
                         }
-                        echo date('Y-m-d H:i:s', time()) . "\n";
+                        echo date('Y-m-d H:i:s', time()) . "#{$i}/{$tn} {$maxPkVal}/{$limit}\n";
                     }
                     $this->logStatus($tn, 'coypData1', 'ok');
 
