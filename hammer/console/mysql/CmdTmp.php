@@ -56,7 +56,7 @@
                         $last = substr($ele, -1);
                         if (strstr($ele, 'UNIQUE KEY') || strstr($ele, 'KEY')) {
                             if (strstr($ele, '`,`') && strstr($ele, 'COMMENT')) {
-                                $ele = explode('COMMENT', $ele) . ($last === ',' ? ',' : '');
+                                $ars[$index] = explode('COMMENT', $ele)[0] . ($last === ',' ? ',' : '');
                             }
                         }
                     }
