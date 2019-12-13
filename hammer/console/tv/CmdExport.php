@@ -28,7 +28,7 @@
             $lastId  = 0;
             file_put_contents($phpFile, '');
             while ($goon) {
-                $table = Sys::app()->db('cli_bftv_slave')->setText("select  id, uuid, getuiid, platform, sys_version, softid, launcher_version,ip, province, city from std_uuid_getuiid and id>'{$lastId}' ORDER BY id ASC LIMIT 1000")->queryAll();
+                $table = Sys::app()->db('cli_bftv_slave')->setText("select  id, uuid, getuiid, platform, sys_version, softid, launcher_version,ip, province, city from std_uuid_getuiid where id>{$lastId} order by id asc limit 1000")->queryAll();
                 if (is_array($table)) {
                     if (count($table) < 1000)
                         $goon = false;
