@@ -137,7 +137,7 @@
                         } else {
                             $goon = false;
                         }
-                        echo date('Y-m-d H:i:s', time()) . "#{$i}/{$tn} {$maxPkVal}/{$limit}\n";
+                        echo date('Y-m-d H:i:s', time()) . "#{$i}/{$tn} {$maxPkVal}/{$insCount}/{$limit}\n";
                     }
                     $this->logStatus($tn, 'coypData1', 'ok');
 
