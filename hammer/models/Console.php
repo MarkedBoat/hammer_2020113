@@ -76,7 +76,9 @@
                 }
                 $str2 = $e->getTraceAsString();
                 echo $str2;
+                echo "\nINFO\n";
                 if (method_exists($e, 'getDebugMsg')) {
+
                     $str = "\n" . $e->getDebugMsg() . "\n";
                     var_export($e->setDebugData());
                     echo "\n";
