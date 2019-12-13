@@ -36,11 +36,14 @@
                 'std_tv_short_video_baofeng',
                 'bftv_copyright_request'
             ];
+            $tnsSkip    = ['std_user_3rd'];
             $tableTns   = $dbBf->setText("SELECT sum(DATA_LENGTH+INDEX_LENGTH)/1024/1024 'size',`table_name` AS tn FROM INFORMATION_SCHEMA. tables WHERE table_schema = 'baofeng_tv'GROUP BY `table_name`;")->queryAll();
 
             foreach ($tableTns as $i => $row) {
                 $tn = $row['tn'];
                 echo "{$i}/{$tn}\n";
+                if (in_array($tn, $tnsSkip, true))
+                    continue;
                 if ($this->getStatus($tn, 'create') === false) {
                     echo "not created\n";
                     $row2 = $dbBf->setText("show create table {$tn};")->queryRow();
