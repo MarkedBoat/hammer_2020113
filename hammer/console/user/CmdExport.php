@@ -5,7 +5,7 @@
 
     use models\common\CmdBase;
     use models\common\sys\Sys;
-
+    date_default_timezone_set('PRC');
     ini_set('date.timezone','Asia/Shanghai');
     class CmdExport extends CmdBase {
 
