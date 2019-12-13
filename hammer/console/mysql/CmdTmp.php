@@ -77,6 +77,40 @@
                     $limit = 10000;
                 }
                 $this->logStatus($tn, 'rowsLimit', $limit);
+                if ($this->getStatus($tn, 'coypData') === false) {
+                    echo "not coypData\n";
+
+                    $tableInfo = $dbBf->setText("show full columns from {$tn};")->queryRow();
+                    $isPkInt   = false;
+                    $pk        = '';
+                    $fields    = [];
+                    $fields2   = [];
+                    foreach ($tableInfo as $row2) {
+                        if ($isPkInt === false && $row2['Key'] === 'PRI' && strstr($row2['Type'], 'int(')) {
+                            $pk      = $row2['Field'];
+                            $isPkInt = true;
+                        }
+                        $fields[]  = "`{$row2['Field']}`";
+                        $fields2[] = $row2['Field'];
+                    }
+                    if ($isPkInt === false) {
+                        $this->logStatus($tn, 'coypData', 'noIntPk');
+                        continue;
+                    }
+
+                    $maxPkVal = $this->getStatus($tn, 'maxPkVal');
+                    if ($maxPkVal === false) {
+                        $maxPkVal = $dbBf->setText("select max(`{$pk}`) from {$tn}")->queryScalar();
+                        $this->logStatus($tn, 'maxId', $maxPkVal);
+                    }
+
+
+                   // $dbFuntv->setText($sql)->execute();
+                   // $this->logStatus($tn, 'coypData', 'ok');
+                } else {
+                    echo "has coypData\n";
+                }
+
             }
         }
 
