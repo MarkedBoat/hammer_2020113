@@ -40,11 +40,14 @@
 
             foreach ($tableTns as $i => $row) {
                 $tn = $row['tn'];
-                echo "{$i}/{$tn}";
+                echo "{$i}/{$tn}\n";
                 if ($this->getStatus($tn, 'create') === false) {
-                    $row2 = $dbBf->setText("show create table std_user;")->queryRow();
+                    echo "not created\n";
+                    $row2 = $dbBf->setText("show create table {$tn};")->queryRow();
                     $dbFuntv->setText(str_replace('USING BTREE', '', $row2['Create Table']))->execute();
                     $this->logStatus($tn, 'create', 'ok');
+                } else {
+                    echo "has created\n";
                 }
 
                 $limit = 0;
