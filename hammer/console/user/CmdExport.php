@@ -77,9 +77,9 @@
                 foreach ($table as $row) {
                     if (substr($row['uuid'], -5, 1) !== '_')
                         continue;
-                    if (!in_array($uuids2, $row['uuid'], true)) {
+                    if (!in_array($row['uuid'], $uuids2, true)) {
                         $uuids2[] = $row['uuid'];
-                        if (!in_array($uuids, $row['uuid'], true)) {
+                        if (!in_array($row['uuid'], $uuids, true)) {
                             $uuids[] = $row['uuid'];
                             $str     = "{$row['uuid']}\n";
                             echo "{$j}/{$i}/{$cnt} {$str}";
