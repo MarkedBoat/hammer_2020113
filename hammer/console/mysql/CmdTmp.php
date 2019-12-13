@@ -107,7 +107,7 @@
                     }
                     $goon        = true;
                     $selection   = join(',', $fields);
-                    $sqlSelctTpl = "select {$selection} from {$tn} where `{$pk}`<{maxVal} limit 100 order by `{$pk}` desc";
+                    $sqlSelctTpl = "select {$selection} from {$tn} where `{$pk}`<{maxVal} order by `{$pk}` desc limit 100 ";
                     $sqlInsTpl   = "insert ignore into {$tn} set " . join(',', $fields2);
 
                     $insCount = 0;
