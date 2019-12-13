@@ -55,7 +55,7 @@
             while (!feof($f)) {
                 $fileLine++;
                 $str = trim(fgets($f));
-                echo $str;
+                echo $str . "\n";
 
             }
             fclose($f);
