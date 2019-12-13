@@ -44,7 +44,12 @@
                 if ($this->getStatus($tn, 'create') === false) {
                     echo "not created\n";
                     $row2 = $dbBf->setText("show create table {$tn};")->queryRow();
-                    $dbFuntv->setText(str_replace('USING BTREE', '', $row2['Create Table']))->execute();
+                    $sql  = str_replace(['USING BTREE', 'utf8mb4_unicode_ci', 'utf8mb4'], [
+                        '',
+                        'utf8',
+                        'utf8'
+                    ], $row2['Create Table']);
+                    $dbFuntv->setText($sql)->execute();
                     $this->logStatus($tn, 'create', 'ok');
                 } else {
                     echo "has created\n";
