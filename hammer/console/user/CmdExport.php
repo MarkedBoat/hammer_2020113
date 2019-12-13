@@ -75,6 +75,8 @@
                 $uuids2 = [];
                 $table  = $cmd->bindArray([':uid' => $uid])->queryAll();
                 foreach ($table as $row) {
+                    if (substr($row['uuid'], -5, 1) !== '_')
+                        continue;
                     if (!in_array($uuids2, $row['uuid'], true)) {
                         $uuids2[] = $row['uuid'];
                         if (!in_array($uuids, $row['uuid'], true)) {
