@@ -54,8 +54,8 @@
                     foreach ($ars as $index => $ele) {
                         $ele  = trim($ele);
                         $last = substr($ele, -1);
-                        if (strstr($ele, 'UNIQUE KEY') || strstr($ele, 'KEY')) {
-                            if (strstr($ele, '`,`') && strstr($ele, 'COMMENT')) {
+                        if (strstr($ele, 'KEY') && (strstr($ele, '`,`') || strstr($ele, '(`'))) {
+                            if (strstr($ele, 'COMMENT')) {
                                 $ars[$index] = explode('COMMENT', $ele)[0] . ($last === ',' ? ',' : '');
                             }
                         }
@@ -83,7 +83,7 @@
             if ($val === false) {
                 file_put_contents($tnFile, "\n<{$key}:$status", FILE_APPEND);
             } else {
-                file_put_contents($tnFile, str_replace("<{$key}:{$val}", "<{$key}:$status", file_get_contents($tnFile)), "\n<{$key}:$status");
+                file_put_contents($tnFile, str_replace("<{$key}:{$val}", "<{$key}:$status", file_get_contents($tnFile)));
             }
         }
 
