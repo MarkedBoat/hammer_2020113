@@ -49,6 +49,18 @@
                         'utf8_general_ci',
                         'utf8'
                     ], $row2['Create Table']);
+
+                    $ars = explode("\n", $sql);
+                    foreach ($ars as $index => $ele) {
+                        $ele  = trim($ele);
+                        $last = substr($ele, -1);
+                        if (strstr($ele, 'UNIQUE KEY') || strstr($ele, 'KEY')) {
+                            if (strstr($ele, '`,`') && strstr($ele, 'COMMENT')) {
+                                $ele = explode('COMMENT', $ele) . ($last === ',' ? ',' : '');
+                            }
+                        }
+                    }
+                    $sql = join("\n", $ars);
                     $dbFuntv->setText($sql)->execute();
                     $this->logStatus($tn, 'create', 'ok');
                 } else {
