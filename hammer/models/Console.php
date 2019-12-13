@@ -76,11 +76,10 @@
                 }
                 $str2 = $e->getTraceAsString();
                 echo $str2;
-                echo "\nINFO\n";
-                if (method_exists($e, 'getDebugMsg')) {
-
-                    $str = "\n" . $e->getDebugMsg() . "\n";
-                    var_export($e->setDebugData());
+                echo "\nDEBUG INFO\n";
+                if (Sys::app()->interruption()->isThrower()) {
+                    $str = "\n" . Sys::app()->interruption()->getDebugMsg() . "\n";
+                    var_export(Sys::app()->interruption()->getDebugData());
                     echo "\n";
                 }
                 file_put_contents(self::getErrorLogFile(), date('Y-m-d H:i:s', time()) . "\t" . self::$cmd . "\n{$str}{$str2}\n", FILE_APPEND);
