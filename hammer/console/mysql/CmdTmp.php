@@ -77,7 +77,7 @@
 
         public function getStatus($tn, $key) {
             $tnFile = "/var/log/porter/mysql/status/{$tn}.txt";
-            if (!file_exists($tn))
+            if (!file_exists($tnFile))
                 file_put_contents($tnFile, '');
             $str = strstr(file_get_contents($tnFile), "<{$key}:");
             if ($str) {
