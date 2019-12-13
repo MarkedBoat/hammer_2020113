@@ -52,12 +52,22 @@
             $file2    = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
             $f        = fopen($file, 'r');
             $fileLine = 0;
+            $uidsVip  = [];
+            $nowTs    = time();
             while (!feof($f)) {
                 $fileLine++;
                 $str = trim(fgets($f));
                 echo $str . "\n";
-
+                if (strlen($str) > 10) {
+                    list($i, $uid, $expires) = explode(',', 'str');
+                    if ($nowTs < intval($expires))
+                        $uidsVip[] = $uid;
+                }
             }
             fclose($f);
+            var_dump($uidsVip);
+            $uuids = [];
+
+
         }
     }
