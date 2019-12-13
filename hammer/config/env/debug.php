@@ -22,8 +22,19 @@
 
         ]
     ];
+
+    $funtv = [
+        'connectionString' => 'mysql:host=192.168.16.140;port=3306;dbname=baofeng_tv',
+        'username'         => 'root',
+        'password'         => '123456',
+        'charset'          => 'utf8',
+        'readOnly'         => true,
+        'attributes'       => [
+            \PDO::ATTR_TIMEOUT => 1
+        ]
+    ];
     return [
-        'db'        => ['cli_bftv_slave' => $dbSlave],
+        'db'        => ['cli_bftv_slave' => $dbSlave, 'funtv' => $funtv],
         'redis'     => [
             'sl2' => ['host' => 'redis-node02', 'port' => 6389, 'password' => '', 'db' => 10],
         ],
