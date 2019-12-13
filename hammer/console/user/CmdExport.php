@@ -65,8 +65,29 @@
                 }
             }
             fclose($f);
-            var_dump($uidsVip);
             $uuids = [];
+            $cnt   = count($uidsVip);
+            //substr($str,-5,1)
+            $cmd = Sys::app()->db('cli_bftv_slave')->setText("SELECT uuid FROM std_user_logintoken WHERE uid=:uid ");
+            $j   = 0;
+            file_put_contents($file2, '');
+            foreach ($uidsVip as $i => $uid) {
+                $uuids2 = [];
+                $table  = $cmd->bindArray([':uid' => $uid])->queryAll();
+                foreach ($table as $row) {
+                    if (!in_array($uuids2, $row['uuid'], true)) {
+                        $uuids2[] = $row['uuid'];
+                        if (!in_array($uuids, $row['uuid'], true)) {
+                            $uuids[] = $row['uuid'];
+                            $str     = "{$row['uuid']}\n";
+                            echo "{$j}/{$i}/{$cnt} {$str}";
+                            file_put_contents($file2, $str, FILE_APPEND);
+                            $j++;
+                        }
+                    }
+                }
+
+            }
 
 
         }
