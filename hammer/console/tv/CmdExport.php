@@ -22,6 +22,8 @@
          * 导出连过网的
          */
         public function onlined() {
+            die("任务结束，防止误操作");
+
             $phpFile = Sys::app()->params['console']['logDir'] . '/onlined_uuid.csv';
             $goon    = true;
             $i       = 0;
@@ -49,7 +51,37 @@
             }
             echo date('Y-m-d H:i:s', time());
             echo "ok\n";
+        }
 
+        /**
+         * 给设备列表打上是否vip
+         */
+        public function vip_uuid() {
+            $fileUuidsVip   = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
+            $fileUuidsSta   = Sys::app()->params['console']['logDir'] . '/uuid_vip_sta.csv';
+            $fileUuidOnline = Sys::app()->params['console']['logDir'] . '/onlined_uuid.csv';
+            $f              = fopen($fileUuidsVip, 'r');
+            $fileLine       = 0;
+            $uuidsVip       = [];
+            while (!feof($f)) {
+                $fileLine++;
+                $str        = trim(fgets($f));
+                $uuidsVip[] = $str;
+                echo $fileLine . '#' . $str . "\n";
+            }
+            fclose($f);
+
+            $f = fopen($fileUuidOnline, 'r');
+            file_put_contents($fileUuidsSta, 'i,id, uuid, getuiid, platform, sys_version, softid, launcher_version,  ip, province, city,is_vip' . "\n");
+            while (!feof($f)) {
+                $str   = trim(fgets($f));
+                $uuid  = explode(',', $str)[2];
+                $isVip = in_array($uuid, $uuidsVip, true) ? '1' : '0';
+                $str   = "{$str},{$isVip}\n";
+                echo $str;
+                file_put_contents($fileUuidsSta, $str, FILE_APPEND);
+            }
+            fclose($f);
 
         }
     }

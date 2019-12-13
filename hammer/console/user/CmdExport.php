@@ -21,6 +21,8 @@
         }
 
         public function hasVipId() {
+            die("任务结束，防止误操作");
+
             $phpFile = Sys::app()->params['console']['logDir'] . '/vip_user.csv';
             $goon    = true;
             $i       = 0;
@@ -48,6 +50,7 @@
         }
 
         public function onlined_uuid() {
+            die("任务结束，防止误操作");
             $file     = Sys::app()->params['console']['logDir'] . '/vip_user.csv';
             $file2    = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
             $f        = fopen($file, 'r');
