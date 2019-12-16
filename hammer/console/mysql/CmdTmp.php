@@ -22,6 +22,7 @@
          * 导出连过网的
          */
         public function slave_to_funtv() {
+            $selectedTable = $this->params->tryGetString('tn');
 
             $dbBf       = Sys::app()->db('cli_bftv_slave');
             $dbFuntv    = Sys::app()->db('funtv');
@@ -38,7 +39,8 @@
             ];
             $tnsSkip    = ['std_user_3rd', 'std_voice_pcklist'];
             $tableTns   = $dbBf->setText("SELECT sum(DATA_LENGTH+INDEX_LENGTH)/1024/1024 'size',`table_name` AS tn FROM INFORMATION_SCHEMA. tables WHERE table_schema = 'baofeng_tv'GROUP BY `table_name`;")->queryAll();
-
+            if ($selectedTable)
+                $tableTns = [['size' => 100, 'tn' => $selectedTable]];
             foreach ($tableTns as $i => $row) {
                 $tn = $row['tn'];
                 echo "{$i}/{$tn}\n";
@@ -138,7 +140,7 @@
                         } else {
                             $goon = false;
                         }
-                        echo date('Y-m-d H:i:s', time()) . "#{$i}/{$tn} {$maxPkVal}/{$insCount}/{$limit}\n";
+                        echo date('Y-m-d H:i:s', time()) . "#table index:{$i}/{$tn} --maxPk:{$maxPkVal} insertCount:{$insCount} table limit:{$limit}\n";
                     }
                     $this->logStatus($tn, 'coypData1', 'ok');
 
