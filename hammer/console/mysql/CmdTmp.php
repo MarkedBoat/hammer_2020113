@@ -102,7 +102,7 @@
                         continue;
                     }
 
-                    $maxPkVal = $this->getStatus($tn, 'maxPkVal');
+                    $maxPkVal = $this->getStatus($tn, 'maxId');
                     if (empty($maxPkVal)) {
                         $maxPkVal = $dbBf->setText("select max(`{$pk}`) from {$tn}")->queryScalar();
                         $this->logStatus($tn, 'maxId', $maxPkVal);
