@@ -77,7 +77,7 @@
                     $limit = 10000;
                 }
                 $this->logStatus($tn, 'rowsLimit', $limit);
-                if (1 || $this->getStatus($tn, 'coypData1') === false) {
+                if ($this->getStatus($tn, 'coypData1') === false) {
                     echo "not coypData\n";
 
                     $tableInfo = $dbBf->setText("show full columns from {$tn};")->queryAll();
@@ -101,10 +101,11 @@
                     }
 
                     $maxPkVal = $this->getStatus($tn, 'maxPkVal');
-                    if ($maxPkVal === false) {
+                    if (empty($maxPkVal)) {
                         $maxPkVal = $dbBf->setText("select max(`{$pk}`) from {$tn}")->queryScalar();
                         $this->logStatus($tn, 'maxId', $maxPkVal);
                     }
+                    $maxPkVal    = intval($maxPkVal);
                     $goon        = true;
                     $selection   = join(',', $fields);
                     $sqlSelctTpl = "select {$selection} from {$tn} where `{$pk}`<{maxVal} order by `{$pk}` desc limit 100 ";
