@@ -13,7 +13,7 @@
         'huxiaobao.fangtangtv.com'  => 'prod',
         'pad-hxb.fangtangtv.com'    => 'prod',
         'huxiaobao1.fangtangtv.com' => 'pre',
-        'porter.bfcode.com'         => 'prod',
+        'porter.bfcode.com'         => 'debug',
     ];
 
 
@@ -57,18 +57,14 @@
     }
 
     spl_autoload_register('tmp_autoload');
-    die(__FILE__.':'.__LINE__);
 
     if (isset($configFiles[$host])) {
         $dir    = __DIR__ . "/config/hosts/{$configFiles[$host]}.php";
         $config = require __DIR__ . "/config/env/{$configFiles[$host]}.php";
-        die(__FILE__.':'.__LINE__);
-
         \models\common\sys\Sys::init($config);
     } else {
         die('domain has not configed');
     }
-    die(__FILE__.':'.__LINE__);
 
     (new \models\Api())->run();
 
