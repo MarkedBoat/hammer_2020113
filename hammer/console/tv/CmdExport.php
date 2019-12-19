@@ -117,7 +117,7 @@
         public function allvip_uuid_only() {
             if ($this->params->tryGetString('danger') !== 'yes')
                 die("任务结束，防止误操作");
-            $fileUuidsVip     = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
+            $fileUuidsVip     = Sys::app()->params['console']['logDir'] . '/allvip_uuid.csv';
             $fileUuidsOnlyAll = Sys::app()->params['console']['logDir'] . '/uuid_allvip_only.csv';
             $fileUuidOnline   = Sys::app()->params['console']['logDir'] . '/onlined_uuid.csv';
             $f                = fopen($fileUuidsVip, 'r');
