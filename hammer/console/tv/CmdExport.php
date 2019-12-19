@@ -101,7 +101,8 @@
                 $str = trim(fgets($f));
                 $ar  = explode(',', $str);
                 if (count($ar) !== 12)
-                    die("\n$str\n");
+                    continue;
+                   // die("\n$str\n");
                 if ($ar[11] === '1') {
                     echo "{$i}:{$str}\n";
                     file_put_contents($fileUuidVipOnly, $ar[2], FILE_APPEND);
