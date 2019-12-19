@@ -64,6 +64,7 @@
     } else {
         die('domain has not configed');
     }
+    die(__FILE__.':'.__LINE__);
 
     (new \models\Api())->run();
 
