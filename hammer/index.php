@@ -60,6 +60,8 @@
     if (isset($configFiles[$host])) {
         $dir    = __DIR__ . "/config/hosts/{$configFiles[$host]}.php";
         $config = require __DIR__ . "/config/env/{$configFiles[$host]}.php";
+        die(__FILE__.':'.__LINE__);
+
         \models\common\sys\Sys::init($config);
     } else {
         die('domain has not configed');
