@@ -105,7 +105,7 @@
                    // die("\n$str\n");
                 if ($ar[11] === '1') {
                     echo "{$i}:{$str}\n";
-                    file_put_contents($fileUuidVipOnly, $ar[2], FILE_APPEND);
+                    file_put_contents($fileUuidVipOnly, $ar[2]."\n", FILE_APPEND);
                     $i++;
                 }
             }
