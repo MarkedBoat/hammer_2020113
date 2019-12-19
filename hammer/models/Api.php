@@ -20,6 +20,8 @@
          * @return string
          */
         public function run() {
+            die(__FILE__.':'.__LINE__);
+
             $uri             = trim(preg_replace('/\?(.*)?$/', '', $_SERVER['REQUEST_URI']), '/');
             $arr             = explode('/', $uri);
             $version         = $arr[1];
