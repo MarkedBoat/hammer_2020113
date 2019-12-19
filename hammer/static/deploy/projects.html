@@ -18,9 +18,13 @@
 </div>
 <script></script>
 <script>
-    var cfg = {projects: ['bftvapi', 'content_cms', 'operate_cms', 'pay_web'], branchs: ['master', 'test', 'debug']};
+    var cfg = {
+        projects: ['bftvapi', 'content_cms', 'operate_cms', 'pay_web', 'porter'],
+        branchs: ['master', 'test', 'debug']
+    };
     cfg.projects.forEach(function (projectName) {
         var row = new Emt('div').setPros({className: 'div_project', title: projectName});
+        kl.id('div_projects').appendChild(row);
         row.addNodes([new Emt('div').setPros({textContent: projectName})]);
         cfg.branchs.forEach(function (brachName) {
             row.addNodes([
