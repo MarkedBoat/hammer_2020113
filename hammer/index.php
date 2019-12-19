@@ -13,6 +13,7 @@
         'huxiaobao.fangtangtv.com'  => 'prod',
         'pad-hxb.fangtangtv.com'    => 'prod',
         'huxiaobao1.fangtangtv.com' => 'pre',
+        'porter.bfcode.com'         => 'prod',
     ];
 
 
