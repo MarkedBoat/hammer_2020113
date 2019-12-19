@@ -66,6 +66,7 @@
 
 
         public function output() {
+            die("\nddddd\n");
             try {
                 $data = $this->__action->run();
                 ob_end_clean();
