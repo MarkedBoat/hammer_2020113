@@ -45,7 +45,6 @@
     }
 
     register_shutdown_function('lastError');
-    die(__FILE__.':'.__LINE__);
 
     function tmp_autoload($class) {
         if ($class) {
@@ -58,6 +57,8 @@
     }
 
     spl_autoload_register('tmp_autoload');
+    die(__FILE__.':'.__LINE__);
+
     if (isset($configFiles[$host])) {
         $dir    = __DIR__ . "/config/hosts/{$configFiles[$host]}.php";
         $config = require __DIR__ . "/config/env/{$configFiles[$host]}.php";
