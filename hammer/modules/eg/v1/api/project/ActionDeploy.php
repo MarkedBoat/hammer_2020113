@@ -17,8 +17,9 @@
         public function run() {
             $project = $this->params->getStringNotNull('project');
             $branch  = $this->params->getStringNotNull('branch');
-
-            return [$project, $branch];
+            //return [$project, $branch];
+            $r = exec("sh /data/code/debug/code.sh {$project} {$branch} '/hammer'", $ar);
+            return [$ar, $r];
 
         }
 

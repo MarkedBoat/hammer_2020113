@@ -12,9 +12,12 @@
 
         .div_project {
             float: left;
+            width: 100%;
         }
 
         .div_project > div {
+            float: left;
+            width: 100px;
         }
 
         .div_project > div > a {
@@ -64,7 +67,7 @@
                     new Emt('a').setPros({
                         target: '_blank',
                         textContent: '-->' + brachName,
-                        href: '/api/v1/eg/project/deploy?project=' + projectName + '&branch=' + brachName
+                        href: '/eg/v1/project/deploy?project=' + projectName + '&branch=' + brachName
                     })
                 ])
             ])
