@@ -50,7 +50,8 @@
         }
 
         public function onlined_uuid() {
-            die("任务结束，防止误操作");
+            if ($this->params->tryGetString('danger') !== 'yes')
+                die("任务结束，防止误操作");
             $file     = Sys::app()->params['console']['logDir'] . '/vip_user.csv';
             $file2    = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
             $f        = fopen($file, 'r');
@@ -63,7 +64,7 @@
                 echo $str . "\n";
                 if (strlen($str) > 10) {
                     list($i, $uid, $expires) = explode(',', $str);
-                    if ($nowTs < intval($expires))
+                    if (0 < intval($expires))
                         $uidsVip[] = $uid;
                 }
             }

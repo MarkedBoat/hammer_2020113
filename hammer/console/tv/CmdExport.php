@@ -102,12 +102,44 @@
                 $ar  = explode(',', $str);
                 if (count($ar) !== 12)
                     continue;
-                   // die("\n$str\n");
+                // die("\n$str\n");
                 if ($ar[11] === '1') {
                     echo "{$i}:{$str}\n";
-                    file_put_contents($fileUuidVipOnly, $ar[2]."\n", FILE_APPEND);
+                    file_put_contents($fileUuidVipOnly, $ar[2] . "\n", FILE_APPEND);
                     $i++;
                 }
+            }
+            fclose($f);
+
+        }
+
+
+        public function allvip_uuid_only() {
+            if ($this->params->tryGetString('danger') !== 'yes')
+                die("任务结束，防止误操作");
+            $fileUuidsVip     = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
+            $fileUuidsOnlyAll = Sys::app()->params['console']['logDir'] . '/uuid_allvip_only.csv';
+            $fileUuidOnline   = Sys::app()->params['console']['logDir'] . '/onlined_uuid.csv';
+            $f                = fopen($fileUuidsVip, 'r');
+            $fileLine         = 0;
+            $uuidsVip         = [];
+            while (!feof($f)) {
+                $fileLine++;
+                $str        = trim(fgets($f));
+                $uuidsVip[] = $str;
+                echo $fileLine . '#' . $str . "\n";
+            }
+            fclose($f);
+
+            $f = fopen($fileUuidOnline, 'r');
+            file_put_contents($fileUuidsOnlyAll, '');
+            while (!feof($f)) {
+                $str   = trim(fgets($f));
+                $uuid  = explode(',', $str)[2];
+                $isVip = in_array($uuid, $uuidsVip, true) ? '1' : '0';
+                $str   = "{$str},{$isVip}\n";
+                echo $str;
+                file_put_contents($fileUuidsOnlyAll, $uuid . "\n", FILE_APPEND);
             }
             fclose($f);
 
