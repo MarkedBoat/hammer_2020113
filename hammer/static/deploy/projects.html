@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="kl-hammer.js" charset="UTF-8"></script>
+    <title>项目列表</title>
+</head>
+<body>
+<div>
+    <div id="div_projects">
+        <div class="div_project">
+            <div>项目</div>
+            <div>->master</div>
+            <div>->test</div>
+            <div>->debug</div>
+        </div>
+    </div>
+</div>
+<script></script>
+<script>
+    var cfg = {projects: ['bftvapi', 'content_cms', 'operate_cms', 'pay_web'], branchs: ['master', 'test', 'debug']};
+    cfg.projects.forEach(function (projectName) {
+        var row = new Emt('div').setPros({className: 'div_project', title: projectName});
+        row.addNodes([new Emt('div').setPros({textContent: projectName})]);
+        cfg.branchs.forEach(function (brachName) {
+            row.addNodes([
+                new Emt('div').addNodes([
+                    new Emt('a').setPros({
+                        target: '_blank',
+                        textContent: '-->' + brachName,
+                        href: '/api/v1/project/deploy?project=' + projectName + '&branch=' + brachName
+                    })
+                ])
+            ])
+        })
+    });
+</script>
+</body>
+</html>
