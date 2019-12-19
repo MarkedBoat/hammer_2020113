@@ -45,6 +45,7 @@
     }
 
     register_shutdown_function('lastError');
+    die(__FILE__.':'.__LINE__);
 
     function tmp_autoload($class) {
         if ($class) {
