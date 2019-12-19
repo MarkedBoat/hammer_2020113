@@ -57,6 +57,7 @@
          * 给设备列表打上是否vip
          */
         public function vip_uuid() {
+            die("任务结束，防止误操作");
             $fileUuidsVip   = Sys::app()->params['console']['logDir'] . '/vip_uuid.csv';
             $fileUuidsSta   = Sys::app()->params['console']['logDir'] . '/uuid_vip_sta.csv';
             $fileUuidOnline = Sys::app()->params['console']['logDir'] . '/onlined_uuid.csv';
@@ -80,6 +81,32 @@
                 $str   = "{$str},{$isVip}\n";
                 echo $str;
                 file_put_contents($fileUuidsSta, $str, FILE_APPEND);
+            }
+            fclose($f);
+
+        }
+
+
+        /**
+         * 给设备列表打上是否vip
+         */
+        public function vip_uuid_only() {
+            $fileUuidsSta    = Sys::app()->params['console']['logDir'] . '/uuid_vip_sta.csv';
+            $fileUuidVipOnly = Sys::app()->params['console']['logDir'] . '/uuid_vip_only.csv';
+
+            $f = fopen($fileUuidsSta, 'r');
+            file_put_contents($fileUuidVipOnly, '');
+            $i = 1;
+            while (!feof($f)) {
+                $str = trim(fgets($f));
+                $ar  = explode(',', $str);
+                if (count($ar) !== 12)
+                    die("\n$str\n");
+                if ($ar[11] === '1') {
+                    echo "{$i}:{$str}\n";
+                    file_put_contents($fileUuidVipOnly, $ar[2], FILE_APPEND);
+                    $i++;
+                }
             }
             fclose($f);
 
