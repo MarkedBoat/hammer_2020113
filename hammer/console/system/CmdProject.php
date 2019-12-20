@@ -83,7 +83,7 @@
                             echo "{$cmd}\n";
                             exec($cmd);
                         } else {
-                            echo "---- {$logDir}/{$file}\n";
+                            echo "wait\n";
                         }
                     }
                 }
