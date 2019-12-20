@@ -96,6 +96,15 @@
                         'timeLimit' => 7200,
                         'logstyle'  => ['Y', 'md', '>>'],
                     ],
+                    'kill_plan_by_id'          => [
+                        'time'      => ['*/1 */1 */1'],
+                        'cmd'       => 'system/launcher killPlan',
+                        'comment'   => '临时杀死任务',
+                        'status'    => true,
+                        'maxLimit'  => 1,
+                        'timeLimit' => 7200,
+                        'logstyle'  => ['Y', 'md', '>>'],
+                    ],
                 ]
             ],
 

@@ -182,8 +182,8 @@
             }
         }
 
-        public static function killPlan() {
-            echo "\n fuc\n";
+        public function killPlan() {
+            echo "\n killPlan\n";
             $killDir = Sys::app()->params['console']['logDir'] . '/tasks/kill';
             foreach ([$killDir] as $dir)
                 if (!file_exists($dir)) {
