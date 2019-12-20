@@ -184,38 +184,19 @@
         }
 
         public function src_to_funtv() {
-            Sys::app()->db('src0');
-            echo "0ok\n";
-            Sys::app()->db('src1');
-            echo "1\n";
-            die;
-            $selectedTable = $this->params->tryGetString('tn');
-
-            $dbBf       = Sys::app()->db('cli_bftv_slave');
-            $dbFuntv    = Sys::app()->db('funtv');
-            $tnsAllData = [
-                'std_album',
-                'std_episode_qiyi',
-                'bftv_copyrights_request_statis',
-                'std_album_keywords',
-                'std_l_channel_video',
-                'bftv_order',
-                'std_uuid_getuiid',
-                'std_tv_short_video_baofeng',
-                'bftv_copyright_request'
+            $dbInfos = [
+                ['baofeng_source_31', Sys::app()->db('src0'), Sys::app()->db('to0')],
+                ['baofeng_source_41', Sys::app()->db('src1'), Sys::app()->db('to1')]
             ];
-            $tnsSkip    = ['std_user_3rd', 'std_voice_pcklist'];
-            $tableTns   = $dbBf->setText("SELECT sum(DATA_LENGTH+INDEX_LENGTH)/1024/1024 'size',`table_name` AS tn FROM INFORMATION_SCHEMA. tables WHERE table_schema = 'baofeng_tv'GROUP BY `table_name`;")->queryAll();
-            if ($selectedTable)
-                $tableTns = [['size' => 100, 'tn' => $selectedTable]];
-            foreach ($tableTns as $i => $row) {
-                $tn = $row['tn'];
-                echo "{$i}/{$tn}\n";
-                if (in_array($tn, $tnsSkip, true))
-                    continue;
-                if (1) {
-                    echo "not created\n";
-                    $row2 = $dbBf->setText("show create table {$tn};")->queryRow();
+            foreach ($dbInfos as $dbInfo) {
+                $dbSrc    = $dbInfo[1];
+                $dbTo     = $dbInfo[2];
+                $tableTns = $dbSrc->setText("SELECT `table_name` AS tn FROM INFORMATION_SCHEMA. tables WHERE table_schema = '{$dbInfo[0]}';")->queryAll();
+                foreach ($tableTns as $i => $row) {
+                    $tn = $row['tn'];
+                    echo "{$i}/{$tn}\n";
+
+                    $row2 = $dbSrc->setText("show create table {$tn};")->queryRow();
                     if (isset($row2['View']))
                         continue;
                     $sql = str_replace(['USING BTREE', 'utf8mb4_unicode_ci', 'utf8mb4'], [
@@ -235,17 +216,16 @@
                         }
                     }
                     $sql = join("\n", $ars);
-                    $dbFuntv->setText($sql)->execute();
-                    //  $this->logStatus($tn, 'create', 'ok');
-                } else {
-                    echo "has created\n";
-                }
+                    try {
+                        $dbTo->setText($sql)->execute();
+                    } catch (\Exception $e) {
 
-                $limit = 0;
-                if (!in_array($tn, $tnsAllData, true) && intval($row['size']) > 500) {
-                    $limit = 10000;
+                    }
+
+
                 }
-                // $this->logStatus($tn, 'rowsLimit', $limit);
             }
+
+
         }
     }

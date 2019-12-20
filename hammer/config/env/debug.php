@@ -39,13 +39,38 @@
         'username'         => 'src',
         'password'         => 'srcdata@2016',
         'charset'          => 'utf8',
+        'readOnly'         => true,
     );
     $src2 = array(
         'connectionString' => 'mysql:host=127.0.0.1;dbname=baofeng_source_31;port=3307',
         'username'         => 'src',
         'password'         => 'srcdata@2016',
         'charset'          => 'utf8',
+        'readOnly'         => true,
     );
+
+
+    $to0 = [
+        'connectionString' => 'mysql:host=192.168.16.140;port=3306;dbname=baofeng_src_0',
+        'username'         => 'root',
+        'password'         => '123456',
+        'charset'          => 'utf8',
+        'readOnly'         => true,
+        'attributes'       => [
+            \PDO::ATTR_TIMEOUT => 1
+        ]
+    ];
+
+    $to1 = [
+        'connectionString' => 'mysql:host=192.168.16.140;port=3306;dbname=baofeng_src_1',
+        'username'         => 'root',
+        'password'         => '123456',
+        'charset'          => 'utf8',
+        'readOnly'         => true,
+        'attributes'       => [
+            \PDO::ATTR_TIMEOUT => 1
+        ]
+    ];
 
     return [
         'db'        => [
@@ -53,6 +78,8 @@
             'funtv'          => $funtv,
             'src0'           => $src,
             'src1'           => $src2,
+            'to0'            => $to0,
+            'to1'            => $to1
         ],
         'redis'     => [
             'sl2' => ['host' => 'redis-node02', 'port' => 6389, 'password' => '', 'db' => 10],
