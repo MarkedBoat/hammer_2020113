@@ -133,7 +133,12 @@
                                         kl.id('his_info_text').textContent = this.data.result;
                                         kl.id('his_retry').btn = this.data.btn;
                                     });
-                                    kl.id('his_list').appendChild(btn);
+                                    //t.insertBefore(new Emt('a'),t.firstElementChild);
+                                    if (kl.id('his_list').childElementCount === 0) {
+                                        kl.id('his_list').appendChild(btn);
+                                    } else {
+                                        kl.id('his_list').insertBefore(btn, kl.id('his_list').firstElementChild);
+                                    }
                                 }
                             });
                         };
