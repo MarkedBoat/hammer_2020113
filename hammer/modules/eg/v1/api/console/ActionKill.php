@@ -1,6 +1,6 @@
 <?php
 
-    namespace modules\eg\v1\api\project;
+    namespace modules\eg\v1\api\console;
 
     use console\system\CmdLauncher;
     use models\common\ActionBase;
