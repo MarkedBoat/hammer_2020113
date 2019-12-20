@@ -27,9 +27,8 @@
                 $pid = 0;
                 if ($str) {
                     $r      = preg_match('/\d+/', $str, $ar2);
-                    $data[] = [$r, $ar2];
                     if (count($ar2)) {
-                        $pid = $ar2[1];
+                        $pid = $ar2[0];
                         if ($pid)
                             exec("kill {$pid}");
 
