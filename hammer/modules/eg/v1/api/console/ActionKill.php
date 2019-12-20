@@ -24,7 +24,7 @@
             $ar   = CmdLauncher::getPlanRunning($planId);
             $data = ['kill' => []];
             foreach ($ar as $str) {
-                preg_match("/d+/", $str, $ar2);
+                preg_match("/\d+/ig", $str, $ar2);
                 $data[] = $ar2;
                 $pid    = explode(" ", $str)[1];
                 if ($pid)
