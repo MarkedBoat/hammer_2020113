@@ -119,13 +119,14 @@
                             //href: '/eg/v1/project/deploy?project=' + projectName + '&branch=' + brachName
                         });
                         a.deploy = function () {
+                            console.log('deploy');
                             var projectName = this.project;
                             var brachName = this.branch;
                             ajax({
                                 url: '/eg/v1/project/deploy',
                                 data: {project: this.project, branch: this.branch},
                                 success: function (txt) {
-                                    console.log(txt);
+                                    //console.log(txt);
                                     var btn = new Emt('button').setPros({textContent: projectName + '/' + brachName});
                                     btn.data = {project: projectName, branch: brachName, result: txt, btn: a};
                                     btn.addEventListener('click', function () {
@@ -137,6 +138,7 @@
                             });
                         };
                         a.addEventListener('click', function () {
+                            console.log('click');
                             this.deploy();
                         });
                         return a;
