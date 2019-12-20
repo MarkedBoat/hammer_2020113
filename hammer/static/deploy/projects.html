@@ -47,15 +47,21 @@
         #his_list {
             display: block;
             float: left;
+            width: 40%;
         }
 
         #his_list > button {
-
+            display: block;
+            float: left;
+            width: 80%;
+            padding: 5px;
+            margin: 5px;
         }
 
         #his_info {
             display: block;
             float: left;
+            width: 60%;
         }
 
         #his_info_text {
@@ -68,8 +74,8 @@
         #his_retry {
             display: block;
             float: left;
-            width: 100%;
-            min-height: 500px;
+            width: 50px;
+            min-height: 30px;
         }
     </style>
 </head>
@@ -105,26 +111,33 @@
             row.addNodes([
                 new Emt('div').addNodes([
                     function () {
-                        var a = new Emt('a').setPros({
+                        var a = new Emt('button').setPros({
                             target: '_blank',
                             textContent: '-->' + brachName,
+                            project: projectName,
+                            branch: brachName
                             //href: '/eg/v1/project/deploy?project=' + projectName + '&branch=' + brachName
                         });
-                        a.addEventListener('click', function () {
+                        a.deploy = function () {
+                            var projectName = this.project;
+                            var brachName = this.branch;
                             ajax({
                                 url: '/eg/v1/project/deploy',
-                                data: {project: projectName, branch: brachName},
+                                data: {project: this.project, branch: this.branch},
                                 success: function (txt) {
                                     console.log(txt);
                                     var btn = new Emt('button').setPros({textContent: projectName + '/' + brachName});
-                                    btn.data = {project: projectName, branch: brachName, result: txt, retryHref: a};
+                                    btn.data = {project: projectName, branch: brachName, result: txt, btn: a};
                                     btn.addEventListener('click', function () {
                                         kl.id('his_info_text').textContent = this.data.result;
-                                        kl.id('his_retry').retryHref = this.data.retryHref;
+                                        kl.id('his_retry').btn = this.data.btn;
                                     });
                                     kl.id('his_list').appendChild(btn);
                                 }
-                            })
+                            });
+                        };
+                        a.addEventListener('click', function () {
+                            this.deploy();
                         });
                         return a;
                     }()
@@ -134,7 +147,7 @@
         })
 
         kl.id('his_retry').addEventListener('click', function () {
-            this.retryHref.click();
+            this.btn.deploy();
         });
     });
 </script>
