@@ -43,14 +43,17 @@
                 $taskFiles = array_slice(scandir($taskDir), 2);
                 $logFiles  = array_slice(scandir($logDir), 2);
                 foreach ($taskFiles as $file) {
+                    $hasLog = in_array("{$file}.log", $logFiles, true) ? 'has' : 'no';
+                    echo "\n---------tasks:{$file} log:{$hasLog}---------\n";
                     list($time, $project, $branch) = explode('__', $file);
                     if ((time() - $time) > 300) {
+                        echo "timeout\n";
                         $cmd = "rm -f {$taskDir}/{$file}";
                         echo "{$cmd}\n";
                         exec($cmd);
                     } else {
                         $logFile = "{$logDir}/{$file}.log";
-                        if (in_array($logFile, $logFiles, true)) {
+                        if ($hasLog === 'has') {
                             echo "skip\n";
                         } else {
                             $cmd = "sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile";
@@ -63,8 +66,10 @@
 
 
                 foreach ($logFiles as $file) {
+                    echo "\n ----------- log:{$file}\n";
                     $time = explode('_', $file)[0];
                     if ((time() - $time) > 300) {
+                        echo "timeout\n";
                         $cmd = "rm -f {$logDir}/{$file}";
                         echo "{$cmd}\n";
                         exec($cmd);
