@@ -122,12 +122,14 @@
                             console.log('deploy');
                             var projectName = this.project;
                             var brachName = this.branch;
+                            //(new Date()).toISOString().replace(/([TZ]|.000)/ig,' ')
+                            var btn = new Emt('button').setPros({textContent: (new Date()).toISOString().replace(/([TZ]|.000)/ig, ' ') + '<<' + projectName + '/' + brachName + '>>'});
                             ajax({
                                 url: '/eg/v1/project/deploy',
                                 data: {project: this.project, branch: this.branch},
                                 success: function (txt) {
                                     //console.log(txt);
-                                    var btn = new Emt('button').setPros({textContent: projectName + '/' + brachName});
+                                    btn.textContent += (new Date()).toISOString().replace(/([TZ]|.000)/ig, ' ');
                                     btn.data = {project: projectName, branch: brachName, result: txt, btn: a};
                                     btn.addEventListener('click', function () {
                                         kl.id('his_info_text').textContent = this.data.result;
