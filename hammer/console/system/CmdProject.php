@@ -43,7 +43,7 @@
                 $taskFiles = array_slice(scandir($taskDir), 2);
                 $logFiles  = array_slice(scandir($logDir), 2);
                 foreach ($taskFiles as $file) {
-                    list($time, $project, $branch) = explode('_', $file);
+                    list($time, $project, $branch) = explode('__', $file);
                     if ((time() - $time) > 300) {
                         $cmd = "rm -f {$taskDir}/{$file}";
                         echo "{$cmd}\n";

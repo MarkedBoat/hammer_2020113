@@ -20,7 +20,7 @@
             $branch  = $this->params->getStringNotNull('branch');
 
             $time     = time();
-            $fileName = "{$time}_{$project}_{$branch}";
+            $fileName = "{$time}__{$project}__{$branch}";
             //return [$project, $branch];
             $taskFile = Sys::app()->params['console']['logDir'] . '/project/task/' . $fileName;
             $logFile  = Sys::app()->params['console']['logDir'] . '/project/log/' . $fileName . '.log';
