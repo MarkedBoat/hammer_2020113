@@ -7,7 +7,7 @@
     use models\common\sys\Sys;
 
 
-    class ActionKillTask extends ActionBase {
+    class ActionKill extends ActionBase {
         public static function getClassName() {
             return __CLASS__;
         }
