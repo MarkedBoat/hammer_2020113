@@ -99,6 +99,8 @@
 </div>
 <script></script>
 <script>
+    //http://porter.bfcode.com/eg/v1/console/tasks
+    //http://porter.bfcode.com/eg/v1/console/kill?planId=git_deploy
     var cfg = {
         projects: ['bftvapi', 'content_cms', 'operate_cms', 'pay_web', 'porter'],
         branchs: ['master', 'test', 'debug']
@@ -124,6 +126,11 @@
                             var brachName = this.branch;
                             //(new Date()).toISOString().replace(/([TZ]|.000)/ig,' ')
                             var btn = new Emt('button').setPros({textContent: (new Date(+new Date() + 8 * 3600 * 1000)).toISOString().replace(/([TZ]|.000)/ig, ' ').replace(/(^\d+-\d+-)|(\.(.*)?$)/ig, '') + '<<' + projectName + '/' + brachName + '>>'});
+                            if (kl.id('his_list').childElementCount === 0) {
+                                kl.id('his_list').appendChild(btn);
+                            } else {
+                                kl.id('his_list').insertBefore(btn, kl.id('his_list').firstElementChild);
+                            }
                             ajax({
                                 url: '/eg/v1/project/deploy',
                                 data: {project: this.project, branch: this.branch},
@@ -136,11 +143,7 @@
                                         kl.id('his_retry').btn = this.data.btn;
                                     });
                                     //t.insertBefore(new Emt('a'),t.firstElementChild);
-                                    if (kl.id('his_list').childElementCount === 0) {
-                                        kl.id('his_list').appendChild(btn);
-                                    } else {
-                                        kl.id('his_list').insertBefore(btn, kl.id('his_list').firstElementChild);
-                                    }
+
                                 }
                             });
                         };
