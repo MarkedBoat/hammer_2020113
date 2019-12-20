@@ -24,18 +24,24 @@
             $ar   = CmdLauncher::getPlanRunning($planId);
             $data = ['kill' => []];
             foreach ($ar as $str) {
-                $pid = 0;
                 if ($str) {
-                    $r      = preg_match('/\d+/', $str, $ar2);
+                    preg_match('/\d+/', $str, $ar2);
                     if (count($ar2)) {
                         $pid = $ar2[0];
-                        if ($pid)
-                            exec("kill {$pid}");
+                        if ($pid) {
+                            exec("kill {$pid}", $ar3);
+                            $data['kill'][] = [$str, $pid, $ar3];
+                        }else{
+                            $data['kill'][] = $str;
+                        }
 
+                    }else{
+                        $data['kill'][] = $str;
                     }
+                }else{
+                    $data['kill'][] = $str;
                 }
 
-                $data['kill'][] = [$str, $pid];
             }
             return $data;
 
