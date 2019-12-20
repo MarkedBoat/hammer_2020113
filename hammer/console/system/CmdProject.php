@@ -44,10 +44,13 @@
                 foreach ($taskFiles as $file) {
                     list($time, $project, $branch) = explode('_', $file);
                     if ((time() - $time) > 300) {
-                        exec("rm -f {$taskDir}/{$file}");
+                        $cmd = "rm -f {$taskDir}/{$file}";
+                        echo "{$cmd}\n";
+                        exec($cmd);
                     } else {
                         $logFile = "{$logDir}/{$file}.log";
-                        exec("sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile");
+                        $cmd     = "sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile";
+                        echo "{$cmd}\n";
                         file_put_contents($logFile, "<<<<<<<GIT OK>>>>>>", FILE_APPEND);
                     }
                 }
@@ -57,11 +60,20 @@
                 foreach ($logFiles as $file) {
                     $time = explode('_', $file)[0];
                     if ((time() - $time) > 300) {
-                        exec("rm -f {$logDir}/{$file}");
+                        $cmd = "rm -f {$logDir}/{$file}";
+                        echo "{$cmd}\n";
+                        exec($cmd);
                     } else {
                         $logOkFile = $file . 'ok';
                         if (in_array($logOkFile, $logFiles)) {
-                            exec("rm -f {$logDir}/{$logOkFile}");
+                            $cmd = "rm -f {$logDir}/{$file}";
+                            echo "{$cmd}\n";
+                            exec($cmd);
+                            $cmd = "rm -f {$logDir}/{$logOkFile}";
+                            echo "{$cmd}\n";
+                            exec($cmd);
+                        } else {
+                            echo "---- {$logDir}/{$file}\n";
                         }
                     }
                 }

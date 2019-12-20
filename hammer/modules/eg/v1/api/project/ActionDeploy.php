@@ -33,8 +33,12 @@
                     if (strstr($str, '<<<<<<<GIT OK>>>>>>')) {
                         file_put_contents($logFile . 'ok', '');
                         break;
+                    } else {
+                        usleep(1000);
                     }
-                };
+                } else {
+                    usleep(1000);
+                }
             }
             die("<pre>{$str}</pre>");
             $r = exec("sh /data/code/debug/code.sh {$project} {$branch} '/hammer'", $ar);
