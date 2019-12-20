@@ -34,10 +34,12 @@
                         file_put_contents($logFile . 'ok', '');
                         break;
                     } else {
-                        usleep(1000);
+                       // usleep(1000);
+                        sleep(1);
                     }
                 } else {
-                    usleep(1000);
+                    //usleep(1000);
+                    sleep(1);
                 }
             }
             die("<pre>{$str}</pre>");
