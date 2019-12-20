@@ -182,4 +182,51 @@
             }
         }
 
+        public static function killPlan() {
+            echo "\n fuc\n";
+            $killDir = Sys::app()->params['console']['logDir'] . '/tasks/kill';
+            foreach ([$killDir] as $dir)
+                if (!file_exists($dir)) {
+                    //exec("touch {$logFileName}");
+                    exec("mkdir -p {$dir}");
+                    exec("chmod 777 {$dir}");
+                };
+            $timeout = 7200;
+            $endTime = time() + 3600;
+            while ($endTime > time()) {
+                echo "{$timeout}\n";
+                $killFiles = array_slice(scandir($killDir), 2);
+                foreach ($killFiles as $i => $planId) {
+                    echo "{$timeout} i:{$i}/{$planId}\n";
+                    $ar = CmdLauncher::getPlanRunning($planId);
+                    foreach ($ar as $j => $str) {
+                        echo "j:{$j} {$str}\n";
+                        if ($str) {
+                            preg_match('/\d+/', $str, $ar2);
+                            if (count($ar2)) {
+                                $pid = $ar2[0];
+                                if ($pid) {
+                                    $cmd = "kill {$pid}";
+                                    echo "{$cmd}\n";
+                                    exec("kill {$pid}", $ar3);
+                                    echo join("\n", $ar3);
+
+                                    $cmd = "rm -f {$killDir}/{$planId}";
+                                    echo "{$cmd}\n";
+                                    exec($cmd, $ar3);
+                                    echo join("\n", $ar3);
+
+                                }
+                            }
+                        }
+                        echo "\n";
+                    }
+                    echo "\n";
+                }
+                //usleep(5000);
+                sleep(1);
+                $timeout--;
+            }
+        }
+
     }

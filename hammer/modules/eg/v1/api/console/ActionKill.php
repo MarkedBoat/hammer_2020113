@@ -4,6 +4,7 @@
 
     use console\system\CmdLauncher;
     use models\common\ActionBase;
+    use models\common\sys\Sys;
 
 
     class ActionKill extends ActionBase {
@@ -17,31 +18,13 @@
 
         public function run() {
             $planId = $this->params->getStringNotNull('planId');
-            //  return CmdLauncher::getPlanRunning($planId);
-            //return [$project, $branch];
-            //  $taskFile = Sys::app()->params['console']['logDir'] . '/project/task/' . $fileName;
-            // $logFile  = Sys::app()->params['console']['logDir'] . '/project/log/' . $fileName . '.log';
-            $ar   = CmdLauncher::getPlanRunning($planId);
-            $data = ['kill' => []];
-            foreach ($ar as $str) {
-                if ($str) {
-                    preg_match('/\d+/', $str, $ar2);
-                    if (count($ar2)) {
-                        $pid = $ar2[0];
-                        if ($pid) {
-                            exec("kill {$pid}", $ar3);
-                            $data['kill'][] = [$str, $pid, $ar3];
-                        }else{
-                            $data['kill'][] = $str;
-                        }
-
-                    }else{
-                        $data['kill'][] = $str;
-                    }
-                }else{
-                    $data['kill'][] = $str;
+            file_put_contents(Sys::app()->params['console']['logDir'] . '/tasks/kill/' . $planId, '');
+            $data = [];
+            for ($i = 0; $i < 30; $i++) {
+                $data[date('Y-m-d H:i:s', time())] = CmdLauncher::getPlanRunning($planId);
+                if (count($data) === 0) {
+                    break;
                 }
-
             }
             return $data;
 

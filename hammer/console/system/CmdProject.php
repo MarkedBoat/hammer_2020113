@@ -41,6 +41,7 @@
             while ($endTime > time()) {
                 echo "{$timeout}\n";
                 $taskFiles = array_slice(scandir($taskDir), 2);
+                $logFiles  = array_slice(scandir($logDir), 2);
                 foreach ($taskFiles as $file) {
                     list($time, $project, $branch) = explode('_', $file);
                     if ((time() - $time) > 300) {
@@ -49,14 +50,18 @@
                         exec($cmd);
                     } else {
                         $logFile = "{$logDir}/{$file}.log";
-                        $cmd     = "sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile";
-                        echo "{$cmd}\n";
-                        exec($cmd);
-                        file_put_contents($logFile, "\n<<<<<<<GIT OK>>>>>>\n", FILE_APPEND);
+                        if (in_array($logFile, $logFiles, true)) {
+                            echo "skip\n";
+                        } else {
+                            $cmd = "sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile";
+                            echo "{$cmd}\n";
+                            exec($cmd);
+                            file_put_contents($logFile, "\n<<<<<<<GIT OK>>>>>>\n", FILE_APPEND);
+                        }
                     }
                 }
 
-                $logFiles = array_slice(scandir($logDir), 2);
+
                 foreach ($logFiles as $file) {
                     $time = explode('_', $file)[0];
                     if ((time() - $time) > 300) {
@@ -77,6 +82,8 @@
                         }
                     }
                 }
+
+
                 //usleep(5000);
                 sleep(1);
                 $timeout--;
