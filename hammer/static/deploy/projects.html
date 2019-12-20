@@ -38,6 +38,39 @@
         .div_project > div:nth-child(4) {
 
         }
+
+        #his {
+            width: 100%;
+            float: left;
+        }
+
+        #his_list {
+            display: block;
+            float: left;
+        }
+
+        #his_list > button {
+
+        }
+
+        #his_info {
+            display: block;
+            float: left;
+        }
+
+        #his_info_text {
+            display: block;
+            float: left;
+            width: 100%;
+            min-height: 500px;
+        }
+
+        #his_retry {
+            display: block;
+            float: left;
+            width: 100%;
+            min-height: 500px;
+        }
     </style>
 </head>
 <body>
@@ -48,6 +81,13 @@
             <div>->master</div>
             <div>->test</div>
             <div>->debug</div>
+        </div>
+    </div>
+    <div id="his">
+        <div id="his_list"></div>
+        <div id="his_info">
+            <textarea id="his_info_text"></textarea>
+            <button id="his_retry">重试</button>
         </div>
     </div>
 </div>
@@ -76,6 +116,13 @@
                                 data: {project: projectName, branch: brachName},
                                 success: function (txt) {
                                     console.log(txt);
+                                    var btn = new Emt('button').setPros({textContent: projectName + '/' + brachName});
+                                    btn.data = {project: projectName, branch: brachName, result: txt, retryHref: a};
+                                    btn.addEventListener('click', function () {
+                                        kl.id('his_info_text').textContent = this.data.result;
+                                        kl.id('his_retry').retryHref = this.data.retryHref;
+                                    });
+                                    kl.id('his_list').appendChild('btn');
                                 }
                             })
                         });
@@ -85,6 +132,10 @@
                 ])
             ])
         })
+
+        kl.id('his_retry').addEventListener('click', function () {
+            this.retryHref.click();
+        });
     });
 </script>
 </body>
