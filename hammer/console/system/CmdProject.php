@@ -38,9 +38,32 @@
 
             $timeout = $this->params->getIntNotNull('timeLimit');
             while ($timeout > 7000) {
-                $files = array_slice(scandir($taskDir), 1);
-                var_dump($files);
-                sleep(10);
+                $taskFiles = array_slice(scandir($taskDir), 2);
+                foreach ($taskFiles as $file) {
+                    list($time, $project, $branch) = explode('_', $file);
+                    if ((time() - $time) > 300) {
+                        exec("rm -f {$taskDir}/{$file}");
+                    } else {
+                        $logFile = "{$logDir}/{$file}.log";
+                        exec("sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile");
+                        file_put_contents($logFile, "<<<<<<<GIT OK>>>>>>", FILE_APPEND);
+                    }
+                }
+
+                $logFiles = array_slice(scandir($logDir), 2);
+                foreach ($logFiles as $file) {
+                    $time = explode('_', $file)[0];
+                    if ((time() - $time) > 300) {
+                        exec("rm -f {$logDir}/{$file}");
+                    } else {
+                        $logOkFile = $file . 'ok';
+                        if (in_array($logOkFile, $logFiles)) {
+                            exec("rm -f {$logDir}/{$logOkFile}");
+                        }
+                    }
+                }
+
+                usleep(5000);
             }
 
         }
