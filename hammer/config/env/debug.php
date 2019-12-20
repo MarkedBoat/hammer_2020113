@@ -35,14 +35,14 @@
     ];
 
     $src  = array(
-        'connectionString' => 'mysql:host=127.0.0.1;dbname=baofeng_source_41;port=3307',
+        'connectionString' => 'mysql:host=127.0.0.1;dbname=baofeng_source_31;port=3307',
         'username'         => 'src',
         'password'         => 'srcdata@2016',
         'charset'          => 'utf8',
         'readOnly'         => true,
     );
     $src2 = array(
-        'connectionString' => 'mysql:host=127.0.0.1;dbname=baofeng_source_31;port=3307',
+        'connectionString' => 'mysql:host=127.0.0.1;dbname=baofeng_source_41;port=3307',
         'username'         => 'src',
         'password'         => 'srcdata@2016',
         'charset'          => 'utf8',
