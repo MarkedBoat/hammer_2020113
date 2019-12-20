@@ -177,4 +177,75 @@
                 return false;
             }
         }
+
+
+        public function get_src_sql() {
+
+        }
+
+        public function src_to_funtv() {
+            Sys::app()->db('src0');
+            echo "0ok\n";
+            Sys::app()->db('src1');
+            echo "1\n";
+            die;
+            $selectedTable = $this->params->tryGetString('tn');
+
+            $dbBf       = Sys::app()->db('cli_bftv_slave');
+            $dbFuntv    = Sys::app()->db('funtv');
+            $tnsAllData = [
+                'std_album',
+                'std_episode_qiyi',
+                'bftv_copyrights_request_statis',
+                'std_album_keywords',
+                'std_l_channel_video',
+                'bftv_order',
+                'std_uuid_getuiid',
+                'std_tv_short_video_baofeng',
+                'bftv_copyright_request'
+            ];
+            $tnsSkip    = ['std_user_3rd', 'std_voice_pcklist'];
+            $tableTns   = $dbBf->setText("SELECT sum(DATA_LENGTH+INDEX_LENGTH)/1024/1024 'size',`table_name` AS tn FROM INFORMATION_SCHEMA. tables WHERE table_schema = 'baofeng_tv'GROUP BY `table_name`;")->queryAll();
+            if ($selectedTable)
+                $tableTns = [['size' => 100, 'tn' => $selectedTable]];
+            foreach ($tableTns as $i => $row) {
+                $tn = $row['tn'];
+                echo "{$i}/{$tn}\n";
+                if (in_array($tn, $tnsSkip, true))
+                    continue;
+                if (1) {
+                    echo "not created\n";
+                    $row2 = $dbBf->setText("show create table {$tn};")->queryRow();
+                    if (isset($row2['View']))
+                        continue;
+                    $sql = str_replace(['USING BTREE', 'utf8mb4_unicode_ci', 'utf8mb4'], [
+                        '',
+                        'utf8_general_ci',
+                        'utf8'
+                    ], $row2['Create Table']);
+
+                    $ars = explode("\n", $sql);
+                    foreach ($ars as $index => $ele) {
+                        $ele  = trim($ele);
+                        $last = substr($ele, -1);
+                        if (strstr($ele, 'KEY') && (strstr($ele, '`,`') || strstr($ele, '(`'))) {
+                            if (strstr($ele, 'COMMENT')) {
+                                $ars[$index] = explode('COMMENT', $ele)[0] . ($last === ',' ? ',' : '');
+                            }
+                        }
+                    }
+                    $sql = join("\n", $ars);
+                    $dbFuntv->setText($sql)->execute();
+                    //  $this->logStatus($tn, 'create', 'ok');
+                } else {
+                    echo "has created\n";
+                }
+
+                $limit = 0;
+                if (!in_array($tn, $tnsAllData, true) && intval($row['size']) > 500) {
+                    $limit = 10000;
+                }
+                // $this->logStatus($tn, 'rowsLimit', $limit);
+            }
+        }
     }

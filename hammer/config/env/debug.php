@@ -33,8 +33,27 @@
             \PDO::ATTR_TIMEOUT => 1
         ]
     ];
+
+    $src  = array(
+        'connectionString' => 'mysql:host=39.107.156.53;dbname=baofeng_source_41;port=3306',
+        'username'         => 'src',
+        'password'         => 'srcdata@2016',
+        'charset'          => 'utf8',
+    );
+    $src2 = array(
+        'connectionString' => 'mysql:host=39.107.156.53;dbname=baofeng_source_31;port=3306',
+        'username'         => 'src',
+        'password'         => 'srcdata@2016',
+        'charset'          => 'utf8',
+    );
+
     return [
-        'db'        => ['cli_bftv_slave' => $dbSlave, 'funtv' => $funtv],
+        'db'        => [
+            'cli_bftv_slave' => $dbSlave,
+            'funtv'          => $funtv,
+            'src0'           => $src,
+            'src1'           => $src2,
+        ],
         'redis'     => [
             'sl2' => ['host' => 'redis-node02', 'port' => 6389, 'password' => '', 'db' => 10],
         ],
