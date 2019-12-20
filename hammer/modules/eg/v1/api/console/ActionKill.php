@@ -4,7 +4,6 @@
 
     use console\system\CmdLauncher;
     use models\common\ActionBase;
-    use models\common\sys\Sys;
 
 
     class ActionKill extends ActionBase {
@@ -18,15 +17,18 @@
 
         public function run() {
             $planId = $this->params->getStringNotNull('planId');
-          //  return CmdLauncher::getPlanRunning($planId);
+            //  return CmdLauncher::getPlanRunning($planId);
             //return [$project, $branch];
             //  $taskFile = Sys::app()->params['console']['logDir'] . '/project/task/' . $fileName;
             // $logFile  = Sys::app()->params['console']['logDir'] . '/project/log/' . $fileName . '.log';
             $ar   = CmdLauncher::getPlanRunning($planId);
             $data = ['kill' => []];
             foreach ($ar as $str) {
-                $pid = explode(" ", $str)[1];
-                exec("kill {$pid}");
+                preg_match("/d+/", $str, $ar2);
+                $data[] = $ar2;
+                $pid    = explode(" ", $str)[1];
+                if ($pid)
+                    exec("kill {$pid}");
                 $data['kill'][] = [$str, $pid];
             }
             return $data;
