@@ -123,13 +123,13 @@
                             var projectName = this.project;
                             var brachName = this.branch;
                             //(new Date()).toISOString().replace(/([TZ]|.000)/ig,' ')
-                            var btn = new Emt('button').setPros({textContent: (new Date()).toISOString().replace(/([TZ]|.000)/ig, ' ') + "\n" + '<<' + projectName + '/' + brachName + '>>' + "\n"});
+                            var btn = new Emt('button').setPros({textContent: (new Date(+new Date() + 8 * 3600 * 1000)).toISOString().replace(/([TZ]|.000)/ig, ' ').replace(/(^\d+-\d+-)|(\.(.*)?$)/ig, '') + '<<' + projectName + '/' + brachName + '>>'});
                             ajax({
                                 url: '/eg/v1/project/deploy',
                                 data: {project: this.project, branch: this.branch},
                                 success: function (txt) {
                                     //console.log(txt);
-                                    btn.textContent += (new Date()).toISOString().replace(/([TZ]|.000)/ig, ' ');
+                                    btn.textContent += (new Date(+new Date() + 8 * 3600 * 1000)).toISOString().replace(/([TZ]|.000)/ig, ' ').replace(/(^\d+-\d+-)|(\.(.*)?$)/ig, '');
                                     btn.data = {project: projectName, branch: brachName, result: txt, btn: a};
                                     btn.addEventListener('click', function () {
                                         kl.id('his_info_text').textContent = this.data.result;
