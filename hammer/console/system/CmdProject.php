@@ -40,7 +40,6 @@
             while ($timeout > 7000) {
                 echo "{$timeout}\n";
                 $taskFiles = array_slice(scandir($taskDir), 2);
-                var_dump($taskFiles);
                 foreach ($taskFiles as $file) {
                     list($time, $project, $branch) = explode('_', $file);
                     if ((time() - $time) > 300) {
@@ -56,7 +55,6 @@
                 }
 
                 $logFiles = array_slice(scandir($logDir), 2);
-                var_dump($logFiles);
                 foreach ($logFiles as $file) {
                     $time = explode('_', $file)[0];
                     if ((time() - $time) > 300) {
@@ -77,7 +75,8 @@
                         }
                     }
                 }
-                usleep(5000);
+                //usleep(5000);
+                sleep(5);
                 $timeout--;
             }
 
