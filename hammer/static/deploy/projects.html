@@ -64,11 +64,24 @@
         cfg.branchs.forEach(function (brachName) {
             row.addNodes([
                 new Emt('div').addNodes([
-                    new Emt('a').setPros({
-                        target: '_blank',
-                        textContent: '-->' + brachName,
-                        href: '/eg/v1/project/deploy?project=' + projectName + '&branch=' + brachName
-                    })
+                    function () {
+                        var a = new Emt('a').setPros({
+                            target: '_blank',
+                            textContent: '-->' + brachName,
+                            //href: '/eg/v1/project/deploy?project=' + projectName + '&branch=' + brachName
+                        });
+                        a.addEventListener('click', function () {
+                            ajax({
+                                url: '/eg/v1/project/deploy',
+                                data: {project: projectName, branch: brachName},
+                                success: function (txt) {
+                                    console.log(txt);
+                                }
+                            })
+                        });
+                        return a;
+                    }()
+
                 ])
             ])
         })
