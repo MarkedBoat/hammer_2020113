@@ -27,18 +27,18 @@
 
         public function scan() {
             echo "\n fuc\n";
-            $taskDir = self::$logDir = Sys::app()->params['console']['logDir'] . '/project/task';
-            $logDir  = self::$logDir = Sys::app()->params['console']['logDir'] . '/project/log';
+            $taskDir = Sys::app()->params['console']['logDir'] . '/project/task';
+            $logDir  = Sys::app()->params['console']['logDir'] . '/project/log';
             foreach ([$taskDir, $logDir] as $dir)
                 if (!file_exists($dir)) {
                     //exec("touch {$logFileName}");
-                    exec("mkdir {$dir}");
+                    exec("mkdir -p {$dir}");
                     exec("chmod 777 {$dir}");
                 };
 
             $timeout = $this->params->getIntNotNull('timeLimit');
             while ($timeout > 7000) {
-                $files=array_slice(scandir($taskDir),2);
+                $files = array_slice(scandir($taskDir), 1);
                 var_dump($files);
                 sleep(10);
             }
