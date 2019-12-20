@@ -50,7 +50,7 @@
                         $logFile = "{$logDir}/{$file}.log";
                         $cmd     = "sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile";
                         echo "{$cmd}\n";
-                        file_put_contents($logFile, "<<<<<<<GIT OK>>>>>>", FILE_APPEND);
+                        file_put_contents($logFile, "\n<<<<<<<GIT OK>>>>>>\n", FILE_APPEND);
                     }
                 }
 
