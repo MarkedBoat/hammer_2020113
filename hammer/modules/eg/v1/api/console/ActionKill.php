@@ -18,11 +18,18 @@
 
         public function run() {
             $planId = $this->params->getStringNotNull('planId');
-            return CmdLauncher::getPlanRunning($planId);
+          //  return CmdLauncher::getPlanRunning($planId);
             //return [$project, $branch];
             //  $taskFile = Sys::app()->params['console']['logDir'] . '/project/task/' . $fileName;
             // $logFile  = Sys::app()->params['console']['logDir'] . '/project/log/' . $fileName . '.log';
-            return Sys::app()->params['console']['tasks'];
+            $ar   = CmdLauncher::getPlanRunning($planId);
+            $data = ['kill' => []];
+            foreach ($ar as $str) {
+                $pid = explode(" ", $str)[1];
+                exec("kill {$pid}");
+                $data['kill'][] = [$str, $pid];
+            }
+            return $data;
 
         }
 
