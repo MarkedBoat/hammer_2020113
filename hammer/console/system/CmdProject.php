@@ -37,7 +37,8 @@
                 };
 
             $timeout = $this->params->getIntNotNull('timeLimit');
-            while ($timeout > 7000) {
+            $endTime = time() + 3600;
+            while ($endTime > time()) {
                 echo "{$timeout}\n";
                 $taskFiles = array_slice(scandir($taskDir), 2);
                 foreach ($taskFiles as $file) {
@@ -77,7 +78,7 @@
                     }
                 }
                 //usleep(5000);
-                sleep(5);
+                sleep(1);
                 $timeout--;
             }
 
