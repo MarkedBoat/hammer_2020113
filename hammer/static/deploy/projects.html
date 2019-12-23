@@ -199,6 +199,7 @@
                                         result: txt,
                                         btn: a
                                     };
+                                    kl.id('his_info_text').textContent = ">>>>>\n" + txt;
                                     btn.addEventListener('click', function () {
                                         kl.id('his_info_text').textContent = this.data.result;
                                         kl.id('his_retry').btn = this.data.btn;

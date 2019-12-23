@@ -42,7 +42,7 @@
                     sleep(1);
                 }
             }
-            die("<pre>{$str}</pre>");
+            die("{$str}");
             $r = exec("sh /data/code/debug/code.sh {$project} {$branch} '/hammer'", $ar);
             return [$ar, $r];
 
