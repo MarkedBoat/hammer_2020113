@@ -95,6 +95,8 @@
             <div>->master</div>
             <div>->test</div>
             <div>->debug</div>
+            <div>CLI入口</div>
+            <div>remark</div>
         </div>
     </div>
     <div id="his">
@@ -215,7 +217,9 @@
 
                 ])
             ])
-        })
+        });
+        row.addNodes([new Emt('div').setPros({textContent: project.shFile}), new Emt('div').setPros({textContent: project.remark})]);
+
     });
     kl.id('his_retry').addEventListener('click', function () {
         this.btn.deploy();
