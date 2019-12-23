@@ -218,7 +218,10 @@
                 ])
             ])
         });
-        row.addNodes([new Emt('div').setPros({textContent: project.shFile}), new Emt('div').setPros({textContent: project.remark})]);
+        row.addNodes([
+            new Emt('div').setPros({textContent: project.shFile.length > 0 ? project.shFile : '--'}),
+            new Emt('div').setPros({textContent: project.remark.length > 0 ? project.remark : '--'})
+        ]);
 
     });
     kl.id('his_retry').addEventListener('click', function () {
