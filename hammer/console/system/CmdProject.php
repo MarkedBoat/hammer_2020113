@@ -45,7 +45,7 @@
                 foreach ($taskFiles as $file) {
                     $hasLog = in_array("{$file}.log", $logFiles, true) ? 'has' : 'no';
                     echo "\n---------tasks:{$file} log:{$hasLog}---------\n";
-                    list($time, $project, $branch) = explode('__', $file);
+                    list($time, $project, $branch, $shFile) = explode('__', $file);
                     if ((time() - $time) > 300) {
                         echo "timeout\n";
                         $cmd = "rm -f {$taskDir}/{$file}";
@@ -56,7 +56,9 @@
                         if ($hasLog === 'has') {
                             echo "skip\n";
                         } else {
-                            $cmd = "sh /data/code/debug/code.sh {$project} {$branch} '/hammer' > $logFile";
+                            if ($shFile)
+                                $shFile = "/{$shFile}";
+                            $cmd = "sh /data/code/debug/code.sh {$project} {$branch} '{$shFile}' > $logFile";
                             echo "{$cmd}\n";
                             exec($cmd);
                             file_put_contents($logFile, "\n<<<<<<<GIT OK>>>>>>\n", FILE_APPEND);

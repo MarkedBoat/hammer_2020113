@@ -104,11 +104,51 @@
     //http://porter.bfcode.com/eg/v1/console/tasks
     //http://porter.bfcode.com/eg/v1/console/kill?planId=git_deploy
     var cfg = {
-        projects: ['bftvapi', 'content_cms', 'operate_cms', 'pay_web', 'porter'],
+        projects: [
+            {
+                name: 'bftvapi',
+                branchs: ['master', 'test', 'debug'],
+                shFile: '',
+                remark: 'bftvapi项目'
+            },
+            {
+                name: 'content_cms',
+                branchs: ['master', 'test', 'debug'],
+                shFile: '',
+                remark: '内容编辑后台'
+            },
+            {
+                name: 'operate_cms',
+                branchs: ['master', 'test', 'debug'],
+                shFile: '',
+                remark: '运营后台'
+            },
+            {
+                name: 'pay_web',
+                branchs: ['master', 'test', 'debug'],
+                shFile: '',
+                remark: '支付web'
+            }, {
+                name: 'porter',
+                branchs: ['master'],
+                shFile: '/porter',
+                remark: '项目交接'
+            }, {
+                name: 'content_spider',
+                branchs: ['master'],
+                shFile: '/hammer',
+                remark: '新内容爬虫'
+            }, {
+                name: 'content_spider_yii',
+                branchs: ['master'],
+                shFile: '/yiic',
+                remark: '老内容爬虫'
+            }],
         branchs: ['master', 'test', 'debug']
     };
-    cfg.projects.forEach(function (projectName) {
-        var row = new Emt('div').setPros({className: 'div_project', title: projectName});
+    cfg.projects.forEach(function (project) {
+        var projectName = project.name;
+        var row = new Emt('div').setPros({className: 'div_project', title: projectName, project: project});
         kl.id('div_projects').appendChild(row);
         row.addNodes([new Emt('div').setPros({textContent: projectName})]);
         cfg.branchs.forEach(function (brachName) {
@@ -119,13 +159,15 @@
                             target: '_blank',
                             textContent: '-->' + brachName,
                             project: projectName,
-                            branch: brachName
+                            branch: brachName,
+                            shFile: project.shFile
                             //href: '/eg/v1/project/deploy?project=' + projectName + '&branch=' + brachName
                         });
                         a.deploy = function () {
                             console.log('deploy');
                             var projectName = this.project;
                             var brachName = this.branch;
+                            var shFile = this.shFile;
                             //(new Date()).toISOString().replace(/([TZ]|.000)/ig,' ')
                             var btn = new Emt('button').setPros({textContent: (new Date(+new Date() + 8 * 3600 * 1000)).toISOString().replace(/([TZ]|.000)/ig, ' ').replace(/(^\d+-\d+-)|(\.(.*)?$)/ig, '') + '<<' + projectName + '/' + brachName + '>>'});
                             if (kl.id('his_list').childElementCount === 0) {
@@ -135,11 +177,17 @@
                             }
                             ajax({
                                 url: '/eg/v1/project/deploy',
-                                data: {project: this.project, branch: this.branch},
+                                data: {project: this.project, branch: this.branch, shFile: this.shFile},
                                 success: function (txt) {
                                     //console.log(txt);
                                     btn.textContent += (new Date(+new Date() + 8 * 3600 * 1000)).toISOString().replace(/([TZ]|.000)/ig, ' ').replace(/(^\d+-\d+-)|(\.(.*)?$)/ig, '');
-                                    btn.data = {project: projectName, branch: brachName, result: txt, btn: a};
+                                    btn.data = {
+                                        project: projectName,
+                                        branch: brachName,
+                                        shFile: shFile,
+                                        result: txt,
+                                        btn: a
+                                    };
                                     btn.addEventListener('click', function () {
                                         kl.id('his_info_text').textContent = this.data.result;
                                         kl.id('his_retry').btn = this.data.btn;

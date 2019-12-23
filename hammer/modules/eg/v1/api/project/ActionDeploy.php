@@ -16,11 +16,11 @@
         }
 
         public function run() {
-            $project = $this->params->getStringNotNull('project');
-            $branch  = $this->params->getStringNotNull('branch');
-
+            $project  = $this->params->getStringNotNull('project');
+            $branch   = $this->params->getStringNotNull('branch');
+            $shFile   = $this->params->tryGetString('shFile');
             $time     = time();
-            $fileName = "{$time}__{$project}__{$branch}";
+            $fileName = "{$time}__{$project}__{$branch}__{$shFile}";
             //return [$project, $branch];
             $taskFile = Sys::app()->params['console']['logDir'] . '/project/task/' . $fileName;
             $logFile  = Sys::app()->params['console']['logDir'] . '/project/log/' . $fileName . '.log';
@@ -34,7 +34,7 @@
                         file_put_contents($logFile . 'ok', '');
                         break;
                     } else {
-                       // usleep(1000);
+                        // usleep(1000);
                         sleep(1);
                     }
                 } else {
