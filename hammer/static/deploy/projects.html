@@ -161,6 +161,9 @@
             row.addNodes([
                 new Emt('div').addNodes([
                     function () {
+                        if (project.branchs.indexOf(brachName) === -1) {
+                            return new Emt('em').setPros({textContent: '--'});
+                        }
                         var a = new Emt('button').setPros({
                             target: '_blank',
                             textContent: '-->' + brachName,
