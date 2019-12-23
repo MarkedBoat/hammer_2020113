@@ -18,7 +18,7 @@
         public function run() {
             $project  = $this->params->getStringNotNull('project');
             $branch   = $this->params->getStringNotNull('branch');
-            $shFile   = $this->params->tryGetString('shFile');
+            $shFile   = trim($this->params->tryGetString('shFile'));
             $time     = time();
             $fileName = "{$time}__{$project}__{$branch}__{$shFile}";
             //return [$project, $branch];
