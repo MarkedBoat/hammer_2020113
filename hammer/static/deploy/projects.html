@@ -115,45 +115,46 @@
         projects: [
             {
                 name: 'bftvapi',
-                branchs: ['debug'],
+                branchs: ['master', 'test', 'debug'],
                 shFile: '',
                 remark: 'bftvapi项目'
             },
             {
                 name: 'content_cms',
-                branchs: ['debug'],
+                branchs: ['master', 'test', 'debug'],
                 shFile: '',
                 remark: '内容编辑后台'
             },
             {
                 name: 'operate_cms',
-                branchs: ['debug'],
+                branchs: ['master', 'test', 'debug'],
                 shFile: '',
                 remark: '运营后台'
             },
             {
                 name: 'pay_web',
-                branchs: ['debug'],
+                branchs: ['master', 'test', 'debug'],
                 shFile: '',
                 remark: '支付web'
             }, {
                 name: 'porter',
-                branchs: ['debug'],
+                branchs: ['master', 'test', 'debug'],
                 shFile: 'porter',
                 remark: '项目交接'
             }, {
                 name: 'content_spider',
-                branchs: ['debug'],
+                branchs: ['master', 'test', 'debug'],
                 shFile: 'hammer',
                 remark: '新内容爬虫'
             }, {
                 name: 'content_spider_yii',
-                branchs: ['debug'],
+                branchs: ['master', 'test', 'debug'],
                 shFile: 'yiic',
                 remark: '老内容爬虫'
             }],
         branchs: ['master', 'test', 'debug']
     };
+    //
     cfg.projects.forEach(function (project) {
         var projectName = project.name;
         var row = new Emt('div').setPros({className: 'div_project', title: projectName, project: project});
