@@ -30,6 +30,8 @@
             $redis->connect('redis-node02', 6389);
             $redis->auth('Ab-18upTxsmuzsf');
             $r=$redis->info();
+            echo "\n" . json_encode($r, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
             var_dump($r);die;
             $iterator = null;
             $i        = 1;
