@@ -32,7 +32,9 @@
             $r=$redis->info();
             echo "\n" . json_encode($r, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-            var_dump($r);die;
+            var_dump($r);
+            var_dump($redis->dbSize());
+            die;
             $iterator = null;
             $i        = 1;
             while (true) {
