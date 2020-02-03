@@ -29,7 +29,8 @@
             $redis = new \Redis();
             $redis->connect('redis-node02', 6389);
             $redis->auth('Ab-18upTxsmuzsf');
-
+            $r=$redis->info();
+            var_dump($r);die;
             $iterator = null;
             $i        = 1;
             while (true) {
