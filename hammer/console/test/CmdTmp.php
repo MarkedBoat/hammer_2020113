@@ -27,7 +27,8 @@
                 'bin' => ['host' => 'redis-node02', 'port' => 6389, 'password' => 'Ab-18upTxsmuzsf'], 'pay' => ['host' => 'redis-node03', 'port' => 6389, 'password' => 'on4PshJqmibi^2n'], 'mpr' => ['host' => 'redis_mpr', 'port' => 6389, 'password' => 'Cipa6hd0ev^vkCh'],
             ];
             $redis = new \Redis();
-            $redis->connect('localhost', 6379);
+            $redis->connect('redis-node02', 6389);
+            $redis->auth('Ab-18upTxsmuzsf');
 
             $iterator = null;
             $i        = 1;
