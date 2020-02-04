@@ -41,6 +41,7 @@
             die;*/
             $i = 0;
             foreach ($array as $redisName => $cfg) {
+                echo "redis:{$redisName}\n";
                 $countRedis = 0;
                 $redis      = new \Redis();
                 $redis->connect($cfg['host'], $cfg['port']);
@@ -61,6 +62,7 @@
                 //echo "\n" . json_encode($redis->info(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
                 // continue;
                 foreach ($dbIndexs as $db) {
+                    echo "redis:{$redisName}/db:{$db}\n";
                     $redis->select($db);
                     $iterator = null;
                     $countDb  = 0;
@@ -70,7 +72,7 @@
                             return;
                         }
                         foreach ($keys as $key) {
-                            echo "all:{$i}/time:" . date('Y-m-d H:i:s', time()) . "/redis:{$redisName}/count:{$countRedis}/db:{$db}/count:{$countDb}/key:{ $key}\n";
+                            echo "all:{$i}/time:" . date('Y-m-d H:i:s', time()) . "/redis:{$redisName}/count:{$countRedis}/db:{$db}/count:{$countDb}/key:{$key}\n";
                             $i++;
                             $countRedis++;
                             $countDb++;
