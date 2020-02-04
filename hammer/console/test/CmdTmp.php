@@ -40,6 +40,8 @@
             var_dump($r);
             var_dump($redis->dbSize());
             die;*/
+            $fileName = '/data/git-webroot/api-htdocs/Bftvapi/download/log.csv';
+            file_put_contents($fileName, '');
             $i    = 0;
             $data = [];
             foreach ($array as $redisName => $cfg) {
@@ -83,6 +85,8 @@
                                 $i++;
                                 $countRedis++;
                                 $countDb++;
+                                file_put_contents($fileName, "{$redisName},{$db},{$key}\n", FILE_APPEND);
+
                             }
                     }
                 }
