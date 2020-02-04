@@ -50,18 +50,17 @@
                 foreach ($info as $key => $str) {
                     if (substr($key, 0, 2) === 'db' && substr($str, 0, 5) === 'keys=') {
                         $dbIndexStr = substr($key, 2);
-                        $dbIndex = intval($dbIndexStr);
+                        $dbIndex    = intval($dbIndexStr);
                         if ($dbIndexStr === strval($dbIndex)) {
                             $dbIndexs[] = $dbIndex;
                             echo "{$key}:{$str}\n";
                         }
                     }
                 }
-                var_export($dbIndexs);
                 echo "\n";
                 //echo "\n" . json_encode($redis->info(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-                continue;
-                for ($db = 0; $db < 16; $db++) {
+                // continue;
+                foreach ($dbIndexs as $db) {
                     $redis->select($db);
                     $iterator = null;
                     $countDb  = 0;
@@ -71,7 +70,7 @@
                             return;
                         }
                         foreach ($keys as $key) {
-                            echo "i:{$i}/time:" . date('Y-m-d H:i:s', time()) . "/redis:{$redisName}/count:{$countRedis}/db:{$db}/count:{$countDb}/key:{ $key}\n";
+                            echo "all:{$i}/time:" . date('Y-m-d H:i:s', time()) . "/redis:{$redisName}/count:{$countRedis}/db:{$db}/count:{$countDb}/key:{ $key}\n";
                             $i++;
                             $countRedis++;
                             $countDb++;
