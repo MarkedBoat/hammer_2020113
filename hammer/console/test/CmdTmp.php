@@ -73,7 +73,7 @@
                             $goon = false;
                         }
                         foreach ($keys as $key) {
-                            echo "all:{$i}/time:" . date('Y-m-d H:i:s', time()) . "/redis:{$redisName}/count:{$countRedis}/db:{$db}/count:{$countDb}/key:{$key}\n";
+                            echo "all:{$i}\ttime:" . date('Y-m-d H:i:s', time()) . "\tredis:{$redisName}\tcount:{$countRedis}\tdb:{$db}\tcount:{$countDb}\key>{$key}\n";
                             $i++;
                             $countRedis++;
                             $countDb++;
