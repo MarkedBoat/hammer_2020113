@@ -24,7 +24,7 @@
             echo "\nok\n";
 
             $array = [
-                'ali' => ['host' => 'r-2zee8444844418a4.redis.rds.aliyuncs.com', 'port' => 6379, 'password' => 'funshion123!@#'],
+                //'ali' => ['host' => 'r-2zee8444844418a4.redis.rds.aliyuncs.com', 'port' => 6379, 'password' => 'funshion123!@#'],
                 'bin' => ['host' => 'redis-node02', 'port' => 6389, 'password' => 'Ab-18upTxsmuzsf'],
                 'pay' => ['host' => 'redis-node03', 'port' => 6389, 'password' => 'on4PshJqmibi^2n'],
                 'mpr' => ['host' => 'redis_mpr', 'port' => 6389, 'password' => 'Cipa6hd0ev^vkCh'],
@@ -48,7 +48,7 @@
                 $redis->connect($cfg['host'], $cfg['port']);
                 $redis->auth($cfg['password']);
                 $info     = $redis->info();
-                var_export($info);die;
+               // var_export($info);die;
                 $dbIndexs = [];
                 foreach ($info as $key => $str) {
                     if (substr($key, 0, 2) === 'db' && substr($str, 0, 5) === 'keys=') {
