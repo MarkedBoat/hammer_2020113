@@ -66,10 +66,11 @@
                     $redis->select($db);
                     $iterator = null;
                     $countDb  = 0;
-                    while (true) {
+                    $goon     = true;
+                    while ($goon) {
                         $keys = $redis->scan($iterator);
                         if ($keys === false) {//迭代结束，未找到匹配pattern的key
-                            return;
+                            $goon = false;
                         }
                         foreach ($keys as $key) {
                             echo "all:{$i}/time:" . date('Y-m-d H:i:s', time()) . "/redis:{$redisName}/count:{$countRedis}/db:{$db}/count:{$countDb}/key:{$key}\n";
