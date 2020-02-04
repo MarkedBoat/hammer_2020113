@@ -85,7 +85,7 @@
                                 $i++;
                                 $countRedis++;
                                 $countDb++;
-                                file_put_contents($fileName, "{$redisName},{$db},{$key}\n", FILE_APPEND);
+                                file_put_contents($fileName, "{$i},{$redisName},{$db},{$key}\n", FILE_APPEND);
 
                             }
                     }
