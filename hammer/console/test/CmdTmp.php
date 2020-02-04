@@ -49,17 +49,17 @@
                 $dbIndexs = [];
                 foreach ($info as $key => $str) {
                     if (substr($key, 0, 2) === 'db' && substr($str, 0, 5) === 'keys=') {
-                        $dbIndex = substr($key, 2);
-                        $len     = strlen($dbIndex);
-                        $dbIndex = intval($dbIndex);
-                        if ($len === strlen($dbIndex)) {
+                        $dbIndexStr = substr($key, 2);
+                        $dbIndex = intval($dbIndexStr);
+                        if ($dbIndexStr === strval($dbIndex)) {
                             $dbIndexs[] = $dbIndex;
-                            echo "{$key}:{$str}";
+                            echo "{$key}:{$str}\n";
                         }
                     }
                 }
                 var_export($dbIndexs);
-                echo "\n" . json_encode($redis->info(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+                echo "\n";
+                //echo "\n" . json_encode($redis->info(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
                 continue;
                 for ($db = 0; $db < 16; $db++) {
                     $redis->select($db);
