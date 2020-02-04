@@ -51,7 +51,7 @@
                     if (substr($key, 0, 2) === 'db' && substr($str, 0, 5) === 'keys=') {
                         $dbIndex = substr($key, 2);
                         $len     = strlen($dbIndex);
-                        $dbIndex = intval($len);
+                        $dbIndex = intval($dbIndex);
                         if ($len === strlen($dbIndex)) {
                             $dbIndexs[] = $dbIndex;
                             echo "{$key}:{$str}";
