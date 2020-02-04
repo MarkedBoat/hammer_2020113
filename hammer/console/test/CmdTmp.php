@@ -40,8 +40,10 @@
             var_dump($r);
             var_dump($redis->dbSize());
             die;*/
-            $i = 0;
+            $i    = 0;
+            $data = [];
             foreach ($array as $redisName => $cfg) {
+                $data[$redisName] = ['dbs' => []];
                 echo "redis:{$redisName}\n";
                 $countRedis = 0;
                 $redis      = new \Redis();
@@ -57,6 +59,7 @@
                         if ($dbIndexStr === strval($dbIndex)) {
                             $dbIndexs[] = $dbIndex;
                             echo "{$key}:{$str}\n";
+                            $data[$redisName]['dbs'][$key] = $str;
                         }
                     }
                 }
@@ -83,9 +86,12 @@
                             }
                     }
                 }
+                $data[$redisName]['total'] = $countRedis;
             }
 
 
+            echo "\n" . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
             echo "\nover\n";
+            die;
         }
     }
