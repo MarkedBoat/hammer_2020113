@@ -48,6 +48,7 @@
                 $redis->connect($cfg['host'], $cfg['port']);
                 $redis->auth($cfg['password']);
                 $info     = $redis->info();
+                var_export($info);die;
                 $dbIndexs = [];
                 foreach ($info as $key => $str) {
                     if (substr($key, 0, 2) === 'db' && substr($str, 0, 5) === 'keys=') {
