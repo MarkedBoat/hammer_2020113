@@ -47,8 +47,8 @@
                 $redis      = new \Redis();
                 $redis->connect($cfg['host'], $cfg['port']);
                 $redis->auth($cfg['password']);
-                $info     = $redis->info();
-               // var_export($info);die;
+                $info = $redis->info();
+                // var_export($info);die;
                 $dbIndexs = [];
                 foreach ($info as $key => $str) {
                     if (substr($key, 0, 2) === 'db' && substr($str, 0, 5) === 'keys=') {
@@ -74,12 +74,13 @@
                         if ($keys === false) {//迭代结束，未找到匹配pattern的key
                             $goon = false;
                         }
-                        foreach ($keys as $key) {
-                            echo "all:{$i}\ttime:" . date('Y-m-d H:i:s', time()) . "\tredis:{$redisName}\tcount:{$countRedis}\tdb:{$db}\tcount:{$countDb}\tkey>{$key}\n";
-                            $i++;
-                            $countRedis++;
-                            $countDb++;
-                        }
+                        if (is_array($keys))
+                            foreach ($keys as $key) {
+                                echo "all:{$i}\ttime:" . date('Y-m-d H:i:s', time()) . "\tredis:{$redisName}\tcount:{$countRedis}\tdb:{$db}\tcount:{$countDb}\tkey>{$key}\n";
+                                $i++;
+                                $countRedis++;
+                                $countDb++;
+                            }
                     }
                 }
             }
