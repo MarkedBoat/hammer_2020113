@@ -17,6 +17,7 @@
         'porter.kl.com'             => 'dev0',
     ];
 
+    die(__FILE__.'#'.__LINE__);
 
     function lastError() {
         if (\models\Api::$hasOutput)
