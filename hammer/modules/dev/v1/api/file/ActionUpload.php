@@ -1,6 +1,6 @@
 <?php
 
-    namespace modules\dev\v1\api;
+    namespace modules\dev\v1\api\file;
 
     use models\common\ActionBase;
     use models\common\sys\Sys;
