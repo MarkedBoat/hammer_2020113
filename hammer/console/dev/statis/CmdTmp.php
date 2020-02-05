@@ -5,6 +5,7 @@
 
     use models\common\CmdBase;
     use models\common\sys\Sys;
+    ini_set('memory_limit', '2048M');
 
 
     class CmdTmp extends CmdBase {
