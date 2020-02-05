@@ -19,6 +19,7 @@
                 $this->setMsg('没有文件')->outError();;
             $file = $_FILES['file'];
             $dir  = __INDEX_DIR__ . '/upload';
+            $dir  = '/data/upload';
             if (!file_exists($dir))
                 mkdir($dir);
             $fileName = $dir . '/' . $file['name'];
