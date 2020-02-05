@@ -3,7 +3,6 @@
     namespace modules\dev\v1\api\file;
 
     use models\common\ActionBase;
-    use models\common\sys\Sys;
 
 
     class ActionUpload extends ActionBase {
@@ -16,8 +15,15 @@
         }
 
         public function run() {
-            var_dump($_FILES);
-            die;
+            if (isset($_FILES['file']))
+                $this->setMsg('没有文件')->outError();;
+            $file = $_FILES['file'];
+            $dir  = __INDEX_DIR__ . '/upload';
+            if (!file_exists($dir))
+                mkdir($dir);
+            move_uploaded_file($file['tmp_name'], $dir . '/' . $file['name']);
+            return ['file' => $file];
+
         }
 
     }
