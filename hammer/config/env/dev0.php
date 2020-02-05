@@ -3,7 +3,7 @@
 
 
     $dev0 = [
-        'connectionString' => 'mysql:host=loccal;port=3306;dbname=sys',
+        'connectionString' => 'mysql:host=localhost;port=3306;dbname=sys',
         'username'         => 'root',
         'password'         => '?rOBo*uKr4:w',
         'charset'          => 'utf8',
@@ -12,7 +12,7 @@
             \PDO::ATTR_TIMEOUT => 1
         ],
         'slaveConfig'      => [
-            'connectionString' => 'mysql:host=loccal;port=3306;dbname=sys',
+            'connectionString' => 'mysql:host=localhost;port=3306;dbname=sys',
             'username'         => 'root',
             'password'         => '?rOBo*uKr4:w',
             'charset'          => 'utf8',
