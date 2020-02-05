@@ -17,6 +17,7 @@
 
         public function run() {
             var_dump($_FILES);
+            die;
         }
 
     }
