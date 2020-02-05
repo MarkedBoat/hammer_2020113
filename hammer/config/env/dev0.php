@@ -5,7 +5,7 @@
     $dev0 = [
         'connectionString' => 'mysql:host=localhost;port=3306;dbname=sys',
         'username'         => 'root',
-        'password'         => '?rOBo*uKr4:w',
+        'password'         => 'kinglone',
         'charset'          => 'utf8',
         'readOnly'         => true,
         'attributes'       => [
@@ -14,7 +14,7 @@
         'slaveConfig'      => [
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=sys',
             'username'         => 'root',
-            'password'         => '?rOBo*uKr4:w',
+            'password'         => 'kinglone',
             'charset'          => 'utf8',
             'attributes'       => [
                 PDO::ATTR_TIMEOUT => 10,
@@ -22,7 +22,6 @@
 
         ]
     ];
-
     return [
         'db'        => [
             'dev0' => $dev0,
