@@ -17,7 +17,6 @@
         'porter.kl.com'             => 'dev0',
     ];
 
-    die(__FILE__.'#'.__LINE__);
 
     function lastError() {
         if (\models\Api::$hasOutput)
@@ -59,7 +58,6 @@
     }
 
     spl_autoload_register('tmp_autoload');
-    die(__FILE__.'#'.__LINE__);
 
     if (isset($configFiles[$host])) {
         $dir    = __DIR__ . "/config/hosts/{$configFiles[$host]}.php";
@@ -68,7 +66,7 @@
     } else {
         die('domain has not configed');
     }
-    die(__FILE__.'#'.__LINE__);
+
     (new \models\Api())->run();
 
 
