@@ -21,8 +21,9 @@
             $dir  = __INDEX_DIR__ . '/upload';
             if (!file_exists($dir))
                 mkdir($dir);
-            move_uploaded_file($file['tmp_name'], $dir . '/' . $file['name']);
-            return ['file' => $file];
+            $fileName = $dir . '/' . $file['name'];
+            $r        = move_uploaded_file($file['tmp_name'], $fileName);
+            return ['dir' => [__INDEX_DIR__, $dir, $fileName, $r], 'file' => $file];
 
         }
 
