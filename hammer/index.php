@@ -14,6 +14,7 @@
         'pad-hxb.fangtangtv.com'    => 'prod',
         'huxiaobao1.fangtangtv.com' => 'pre',
         'porter.bfcode.com'         => 'debug',
+        'porter.kl.com'             => 'dev0',
     ];
 
 
