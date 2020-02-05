@@ -66,7 +66,7 @@
     } else {
         die('domain has not configed');
     }
-
+    die("ok");
     (new \models\Api())->run();
 
 
