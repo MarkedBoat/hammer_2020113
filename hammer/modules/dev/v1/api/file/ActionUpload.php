@@ -15,7 +15,7 @@
         }
 
         public function run() {
-            if (isset($_FILES['file']))
+            if (!isset($_FILES['file']))
                 $this->setMsg('没有文件')->outError();;
             $file = $_FILES['file'];
             $dir  = __INDEX_DIR__ . '/upload';
