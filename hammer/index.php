@@ -58,6 +58,7 @@
     }
 
     spl_autoload_register('tmp_autoload');
+    die(__FILE__.'#'.__LINE__);
 
     if (isset($configFiles[$host])) {
         $dir    = __DIR__ . "/config/hosts/{$configFiles[$host]}.php";
@@ -66,7 +67,7 @@
     } else {
         die('domain has not configed');
     }
-    die("ok");
+    die(__FILE__.'#'.__LINE__);
     (new \models\Api())->run();
 
 
