@@ -90,7 +90,7 @@
                     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
                     continue;
                 }
-                preg_match_all('/dbname=(.*?)(;|$)/i', $str, $ar);
+                preg_match_all('/dbname=(.*?)(;|\')/i', $str, $ar);
                 if (isset($ar[1][0])) {
                     $bind[':name'] = trim(trim($ar[1][0], "'"), '.');
                 } else {
