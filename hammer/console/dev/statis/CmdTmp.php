@@ -63,7 +63,7 @@
 
         public function mysql() {
             $db    = Sys::app()->db('dev0');
-            $sql   = 'insert ignore into tmp_mysql_config set db_host=:host,db_name=:name,db_un=:un,db_psw=:psw,file_name=:file_name,file_line=:file_line,file_project=:file_project,file_env=:file_env,str=:str';
+            $sql   = 'insert ignore into tmp_mysql_config set db_host=:host,db_name=:name,db_un=:un,db_psw=:psw,file_name=:file_name,file_line=:file_line,file_project=:file_project,file_env=:file_env,str=:str on duplicate  key update db_host=:host';
             $array = explode("\n", file_get_contents('/data/upload/mysql.log'));
             $p     = '/host\=(.*)?\;/i';
             $p     = '/host=(.*?);/i';
