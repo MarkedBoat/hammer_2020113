@@ -97,11 +97,12 @@
                     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
                     continue;
                 }
-                preg_match_all('/username(\'|\")?=>(.*?);/i', $str, $ar);
+
+                preg_match_all('/username[\'|\"]?s?=>\s?[\'|\"](.*?)[\'|\"|;]/i', $str, $ar);
                 if (isset($ar[1][0])) {
                     $bind[':un'] = trim(trim($ar[1][0], "'"), '.');
                 }
-                preg_match_all('/password=(.*?);/i', $str, $ar);
+                preg_match_all('/password[\'|\"]?s?=>\s?[\'|\"](.*?)[\'|\"|;]/i', $str, $ar);
                 if (isset($ar[1][0])) {
                     $bind[':psw'] = trim(trim($ar[1][0], "'"), '.');
                 }
