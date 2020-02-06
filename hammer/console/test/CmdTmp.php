@@ -101,9 +101,14 @@
 
         public function mysql() {
             $array = explode("\n", file_get_contents('/data/upload/mysql.log'));
+            $p='/host=(.*)?;/ig';
             foreach ($array as $i => $str) {
                 echo "{$i}:{$str}\n";
+                preg_match_all($p,$str,$ar);
+                var_dump($ar);
+                echo "\n------------------------------------------------------------------\n";
             }
+
         }
 
     }
