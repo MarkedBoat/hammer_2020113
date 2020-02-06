@@ -112,7 +112,7 @@
                 $bind[':file_name']    = $ar2[0];
                 $bind[':file_line']    = $ar2[1];
                 $ar3                   = explode('/', $ar2[0]);
-                $bind[':file_project'] = $ar3[2];
+                $bind[':file_project'] = $ar3[3];
                 $bind[':file_env']     = str_replace('.php', '', array_pop($ar3));
                 echo "\n" . json_encode($bind, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
                 echo "\n------------------------------------------------------------------\n";
