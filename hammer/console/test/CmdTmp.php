@@ -98,4 +98,12 @@
             echo "\nover\n";
             die;
         }
+
+        public function mysql() {
+            $array = explode("\n", file_get_contents('/data/upload/mysql.log'));
+            foreach ($array as $i => $str) {
+                echo "{$i}:{$str}\n";
+            }
+        }
+
     }
