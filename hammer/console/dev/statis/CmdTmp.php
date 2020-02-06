@@ -97,7 +97,7 @@
                     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
                     continue;
                 }
-                preg_match_all('/username=(.*?);/i', $str, $ar);
+                preg_match_all('/username(\'|\")?=>(.*?);/i', $str, $ar);
                 if (isset($ar[1][0])) {
                     $bind[':un'] = trim(trim($ar[1][0], "'"), '.');
                 }
