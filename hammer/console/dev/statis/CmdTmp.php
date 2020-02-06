@@ -63,7 +63,7 @@
 
         public function mysql() {
             $db    = Sys::app()->db('dev0');
-            $sql   = 'insert ignore into tmp_mysql_config set db_host=:host,db_name=:name,db_un=:un,db_psw=:psw,file_name=:file_name,file_line=:file_line,file_project=:file_project,file_env=:file_env ';
+            $sql   = 'insert ignore into tmp_mysql_config set db_host=:host,db_name=:name,db_un=:un,db_psw=:psw,file_name=:file_name,file_line=:file_line,file_project=:file_project,file_env=:file_env,str=:str';
             $array = explode("\n", file_get_contents('/data/upload/mysql.log'));
             $p     = '/host\=(.*)?\;/i';
             $p     = '/host=(.*?);/i';
@@ -82,6 +82,7 @@
                     ':file_line'    => '',
                     ':file_project' => '',
                     ':file_env'     => '',
+                    ':str'          => $str,
                 ];
                 preg_match_all('/host=(.*?);/i', $str, $ar);
                 if (isset($ar[1][0])) {
@@ -115,6 +116,7 @@
                 $bind[':file_project'] = $ar3[3];
                 $bind[':file_env']     = str_replace('.php', '', array_pop($ar3));
                 echo "\n" . json_encode($bind, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+                $db->setText($sql)->bindArray($bind)->execute();
                 echo "\n------------------------------------------------------------------\n";
             }
 
