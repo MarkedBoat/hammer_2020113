@@ -1,6 +1,6 @@
 <?php
 
-
+    ob_start();
     function curlRequestPost($url, $params) {
         $user_agent = "kinglone";
         $ch         = curl_init();    // 初始化CURL句柄
@@ -45,7 +45,9 @@
     $str               = "\n----------------------------------------------------\nrequest:{$requestDate}\n" . json_encode($params, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\nrespone:{$responeDate}/{$diff}\n" . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     file_put_contents('/var/log/porter/api_proxy.txt', $str, FILE_APPEND);
-    echo $str;
+    //echo $str;
+    ob_end_clean();
+    @header('content-Type:application/json;charset=utf8');
     echo $result;
 
 
