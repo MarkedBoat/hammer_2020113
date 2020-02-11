@@ -45,9 +45,11 @@
     $paramsBulk        = '';
     $method            = $params['method'];
     $paramsBulk        = '';
+    $paramsJson        = json_encode($params);
+    ksort($params);
     foreach ($params as $k => $v)
-        $paramsBulk .= "{$k}:{$v}\n";
-    $str = "\n------------------------------------------\n\t{$method}\n------------------------------------------\nrequest:{$requestDate}\n" . json_encode($params, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n#########\n{$paramsBulk}\n##########\nrespone:{$responeDate}/{$diff}\n" . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $paramsBulk .= (str_repeat(' ', (32 - strlen($k))) . "{$k}:{$v}\n");
+    $str = "\n------------------------------------------\n\t{$method}\n------------------------------------------\nrequest:{$requestDate}\n{$paramsJson}\n#########\n{$paramsBulk}\n##########\nrespone:{$responeDate}/{$diff}\n" . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     file_put_contents('/var/log/porter/api_proxy.txt', $str, FILE_APPEND);
     //echo $str;
