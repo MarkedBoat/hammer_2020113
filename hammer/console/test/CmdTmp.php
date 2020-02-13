@@ -109,7 +109,7 @@
                 while (!feof($f)) {
                     $fileLine++;
                     $str = trim(fgets($f));
-                    if (in_array($str, $strs))
+                    if (!in_array($str, $strs))
                         $strs[] = $str;
                     echo "{$fileLine},{$str}\n";
                 }
