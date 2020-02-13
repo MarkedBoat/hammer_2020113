@@ -127,7 +127,7 @@
                     $bind[":str_{$j}"] = $str;
                 }
                 echo "sql:{$i}";
-                $db->setText(join(';', $sqls))->execute();
+                $db->setText(join(';', $sqls))->bindArray($bind)->execute();
             }
             echo "\nok\n";
 
