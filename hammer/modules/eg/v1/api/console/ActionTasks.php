@@ -16,7 +16,7 @@
         }
 
         public function run() {
-
+            //test gitbuh
             //return [$project, $branch];
             //  $taskFile = Sys::app()->params['console']['logDir'] . '/project/task/' . $fileName;
             // $logFile  = Sys::app()->params['console']['logDir'] . '/project/log/' . $fileName . '.log';
