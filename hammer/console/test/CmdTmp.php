@@ -123,7 +123,7 @@
                 $bind = [];
                 $sqls = [];
                 foreach ($strs as $j => $str) {
-                    $sqls[]            = "insert ignore into tmp_hots set str=:str_{$j}";
+                    $sqls[]            = "insert ignore into tmp_hosts set str=:str_{$j}";
                     $bind[":str_{$j}"] = $str;
                 }
                 echo "sql:{$i}";
