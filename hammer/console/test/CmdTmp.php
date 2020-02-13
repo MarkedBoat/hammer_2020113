@@ -4,6 +4,7 @@
     namespace console\test;
 
     use models\common\CmdBase;
+    use models\common\sys\Sys;
 
 
     class CmdTmp extends CmdBase {
@@ -99,17 +100,36 @@
             die;
         }
 
-        public function mysql() {
-            $array = explode("\n", file_get_contents('/data/upload/mysql.log'));
-            $p='/host\=(.*)?\;/i';
-            $p='/host=(.*?);/i';
-            foreach ($array as $i => $str) {
-                echo "{$i}:{$str}\n";
-                preg_match_all($p,$str,$ar);
-                var_dump($ar);
-                echo "\n------------------------------------------------------------------\n";
+        public function hosts() {
+            $filenames = ['/data/upload/urls.txt', '/data/upload/hosts.txt'];
+            $strs      = [];
+            foreach ($filenames as $filename) {
+                $f        = fopen($filename, 'r');
+                $fileLine = 0;
+                while (!feof($f)) {
+                    $fileLine++;
+                    $str = trim(fgets($f));
+                    if (in_array($str, $strs))
+                        $strs[] = $str;
+                    echo "{$fileLine},{$str}\n";
+                }
+
+                fclose($f);
             }
 
-        }
+            $db        = Sys::app()->db('dev0');
+            $strsArray = array_chunk($strs, 1000);
+            foreach ($strsArray as $i => $strs) {
+                $bind = [];
+                $sqls = [];
+                foreach ($strs as $j => $str) {
+                    $sqls[]            = "insert ignore into tmp_hots set str=:str_{$j}";
+                    $bind[":str_{$j}"] = $str;
+                }
+                echo "sql:{$i}";
+                $db->setText(join(';', $sqls))->execute();
+            }
+            echo "\nok\n";
 
+        }
     }
