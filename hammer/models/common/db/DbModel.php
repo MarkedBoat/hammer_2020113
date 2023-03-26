@@ -30,7 +30,7 @@
         private $__conditions = [];
 
         /**
-         * @return $this
+         * @return static
          */
         public static function model() {
             $calledClass = get_called_class();
@@ -160,9 +160,14 @@
             $this->conditions[] = $str;
         }
 
+        /**
+         * @param $order
+         * @return $this
+         */
         public function order($order) {
             if ($order)
                 $this->order = ' ' . $order . ' ';
+            return $this;
         }
 
         public function page($pageNo = 1, $size = 20) {
@@ -265,7 +270,7 @@
 
         /**
          * @param $attributes
-         * @return $this[]
+         * @return static[]
          */
         public function findAllByAttributes($attributes) {
             $this->initAttributes();
@@ -277,7 +282,8 @@
                 $sqls[':' . $key] = "`$key`=:$key";
                 $bind[':' . $key] = $val;
             }
-            $table = $this->getConnection()->setText('SELECT * FROM ' . $this->getTableName() . ' WHERE ' . join(' and ', $sqls) . ';')->bindArray($bind)->queryAll();
+            $table = $this->getConnection()->setText('SELECT * FROM ' . $this->getTableName() . ' WHERE ' . join(' and ', $sqls) . $this->order.';')->bindArray($bind)->queryAll();
+            $this->order='';
             $list  = array();
             if ($table) {
                 foreach ($table as $row) {
@@ -315,6 +321,9 @@
             }
         }
 
+        /**
+         * @return static[]
+         */
         public function findAll() {
             $table = $this->getConnection()->setText('SELECT * FROM ' . $this->getTableName())->queryAll();
             $list  = array();
@@ -411,8 +420,15 @@
                     if (count($this->__onDuplicateSets)) {
                         $sets = [];
                         foreach ($this->__onDuplicateSets as $si => $sv) {
-                            $sets[':s_' . $si] = "`$si`=:s_$si";
-                            $bind[':s_' . $si] = $sv;
+                            if (intval($si) === $si)
+                            {
+                                $sets[] = $sv;
+                            }
+                            else
+                            {
+                                $sets[':s_' . $si] = "`$si`=:s_$si";
+                                $bind[':s_' . $si] = $sv;
+                            }
                         }
                         $sql                     = str_replace(';', 'on duplicate key update ' . join(',', $sets) . ';', $sql);
                         $this->__onDuplicateSets = [];

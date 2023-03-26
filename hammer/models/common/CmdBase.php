@@ -22,8 +22,9 @@
         protected     $params     = null;
         private       $__planId   = '';
 
-        public static function getClassName() {
-            return __CLASS__;
+        public static function getClassName()
+        {
+            return static::class;
         }
 
         public function __construct($param = []) {
